@@ -6,7 +6,7 @@ export default function RootApp() {
 
   const _app = useCallback(()=>{
     if(isOnboarded){
-      return <Redirect href='/home' />
+      return <Redirect href='/main' />
     }
 
   },[isOnboarded])
