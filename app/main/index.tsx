@@ -5,21 +5,38 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useTheme } from '@react-navigation/native';
+import { Themes } from '@/constants/Theme'
 import { useNavigation, useRouter } from 'expo-router';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type FlatViewableChanged = (info: {
   viewableItems: Array<ViewToken>
   changed: Array<ViewToken>
 }) => void
 
+const menuKeys = {
+  "p1": "Prato Principal 1",
+  "p2": "Prato Principal 2",
+  "gre": "Na Grelha",
+  "fag": "Fast Grill",
+  "veg": "Vegetariano",
+  "gua": "Guarnição",
+  "sal": "Salada Crua",
+  "sco": "Salada Cozida",
+  "sopa": "Sopa",
+  "sob": "Sobremesa",
+  "suc": "Suco"
+}
+
 export default function HomeScreen() {
   const navigation = useNavigation()
   const router = useRouter()
-  const theme = useTheme()
+  const theme = useTheme() as typeof Themes.dark | typeof Themes.light
 
   const { width, height } = useWindowDimensions()
   const PageFoods = useRef<FlatList<any> | null>(null)
+  const [isAlmoco, setIsAlmoco] = useState(true)
+  const [favorites, setFavorites] = useState(['berinjela', 'bife', 'frango'])
 
   const day = 0
   const week = {
@@ -28,7 +45,7 @@ export default function HomeScreen() {
       {
         "almoco": {
           "p1": "BIFE DE PANELA",
-          "p2": "TORTA MADALENA DE FRANGO",
+          "p2": "BIFE",
           "gre": "ISCA DE CARNE ACEBOLADA",
           "fag": "FESTIVAL DE MASSAS",
           "veg": "BERINJELA À \nPARMEGINA (CONTÉM\nOVOS, LEITE E \nDERIVADOS) BERINJELA\nÀ MILANESA",
@@ -179,6 +196,22 @@ export default function HomeScreen() {
     { length: width, offset: width * index, index }
   )
 
+  const _checkItem = (item: string) => (
+    favorites.some(favorite => favorite.toUpperCase().includes(item.toUpperCase()) || item.toUpperCase().includes(favorite.toUpperCase()))
+  )
+
+  const _favoriteOnPress = (item: string) => {
+    if (_checkItem(item)) {
+      const _favorites = favorites.filter(favorite => (
+        favorite.toUpperCase() !== item.toUpperCase() || item.toUpperCase().includes(favorite.toUpperCase()) === false
+      ))
+
+      return setFavorites(_favorites)
+    }
+
+    return setFavorites([item, ...favorites])
+  }
+
   useEffect(() => {
     const color = theme.colors.primary
 
@@ -208,62 +241,74 @@ export default function HomeScreen() {
     })
   }, [navigation, theme, theme.colors])
 
-  const customStyle = { width, height, backgroundColor: '#555' }
-
   return (
     <ThemedView style={{ flex: 1 }}>
-     {/* <FlatList
-       data={week?.data}
-       ref={(flatList) => (PageFoods.current = flatList)}
-       // showsHorizontalScrollIndicator={Platform.OS === 'web'}
-       horizontal
-       pagingEnabled
-       getItemLayout={getItemLayout}
-       initialScrollIndex={day}
-       viewabilityConfig={{
-         itemVisiblePercentThreshold: 100,
-       }}
-       renderItem={({ item, index }) => (
-         <ThemedView style={{ flex: 1, ...customStyle }}>
-           <ScrollView nestedScrollEnabled contentContainerStyle={{ paddingBottom: 10, flexGrow: 1 }}>
-             {week.data.map(({ almoco }) => (
-               <ThemedText>{JSON.stringify(almoco)}</ThemedText>
-             ))}
-           </ScrollView>
-         </ThemedView>
-          // <Menu key={index} day={index} item={item} type={type} />
-          // <View
-           style={{
-             justifyContent: "center",
-             width,
-           }}
-           key={index}
-          // >
-           <MButton item={item} launch />
-           <MButton item={item} />
-          // </View>
-        // )}
-      // /> */}
-      <ThemedText>Oi</ThemedText>
+      <FlatList
+        data={week?.data}
+        ref={(flatList) => (PageFoods.current = flatList)}
+        // showsHorizontalScrollIndicator={Platform.OS === 'web'}
+        horizontal
+        pagingEnabled
+        getItemLayout={getItemLayout}
+        initialScrollIndex={day}
+        viewabilityConfig={{
+          itemVisiblePercentThreshold: 100,
+        }}
+        renderItem={({ item }) => (
+          <ThemedView style={{ flex: 1, width, height }}>
+            <ScrollView nestedScrollEnabled contentContainerStyle={{ paddingBottom: 110, flexGrow: 1 }}>
+              {
+                Object.keys(isAlmoco ? item.almoco : item.jantar).map((key, index, _items) => {
+                  const menu = isAlmoco ? item.almoco : item.jantar
+                  const _itemMenu = menu[key as keyof typeof menu]
+
+                  return (
+                    <ThemedView key={index} style={{ padding: 10, paddingVertical: 10, paddingBottom: index === _items.length - 1 ? 0 : 20, flexDirection: 'row', alignItems: 'center' }}>
+                      <View style={{ backgroundColor: theme.colors.primary, width: 3, height: '100%', borderRadius: 10 }} />
+                      <ThemedView style={{ flex: 1, paddingHorizontal: 10 }}>
+                        <ThemedText style={{ fontWeight: '400', marginBottom: 1 }}>{menuKeys[key as keyof typeof menuKeys]}</ThemedText>
+                        <ThemedText style={{ fontWeight: 'bold' }}>{_itemMenu}</ThemedText>
+                      </ThemedView>
+                      <Button onPress={() => _favoriteOnPress(_itemMenu)}>
+                        <IconSymbol name={_checkItem(_itemMenu) ? 'heart.fill' : 'heart'} color={theme.colors.primary} />
+                      </Button>
+                    </ThemedView>)
+                })
+              }
+            </ScrollView>
+          </ThemedView>
+        )}
+      />
+      <ThemedView style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+        <Button onPress={() => setIsAlmoco(true)} style={isAlmoco ? {...styles.navBtn, backgroundColor: theme.colors.background, borderColor: theme.colors.primary, borderWidth: 1, borderTopWidth: 0, elevation: 1} : {...styles.disabledNavBtn, borderTopWidth: 1, borderColor: theme.colors.primary, backgroundColor: theme.colors.unselect}}>
+          <ThemedText>Almoço</ThemedText>
+        </Button>
+        <Button onPress={() => setIsAlmoco(false)} style={!isAlmoco ? {...styles.navBtn, backgroundColor: theme.colors.background, borderColor: theme.colors.primary, borderWidth: 1, borderTopWidth: 0, elevation: 1} : {...styles.disabledNavBtn, borderTopWidth: 1, borderColor: theme.colors.primary, backgroundColor: theme.colors.unselect}}>
+          <ThemedText>Jantar</ThemedText>
+        </Button>
+      </ThemedView>
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  navBtn: {
+    flex: 1,
+    minHeight: 50,
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'center',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    backgroundColor: 'green'
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+  disabledNavBtn: {
+    flex: 1,
+    minHeight: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    backgroundColor: 'red'
+
+  }
 });

@@ -14,7 +14,7 @@ const MAPPING = {
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
   'heart.fill': 'favorite',
-  'heart.outline': 'favorite-outline',
+  'heart': 'favorite-outline',
   'text.bubble.fill': 'record-voice-over',
   'bell.fill': 'notifications',
   'bell.fill.active': 'notifications-active',
