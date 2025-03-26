@@ -28,6 +28,7 @@ const menuKeys = {
   "suc": "Suco"
 }
 
+
 export default function HomeScreen() {
   const navigation = useNavigation()
   const router = useRouter()
@@ -37,8 +38,10 @@ export default function HomeScreen() {
   const PageFoods = useRef<FlatList<any> | null>(null)
   const [isAlmoco, setIsAlmoco] = useState(true)
   const [favorites, setFavorites] = useState(['berinjela', 'bife', 'frango'])
+  const [day, setDay] = useState(new Date().getDay())
 
-  const day = 0
+  const STRING_DAYS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex']
+
   const week = {
     "_id": "67cee120eb392a014d2846a7",
     "data": [
@@ -185,7 +188,7 @@ export default function HomeScreen() {
       if (viewableItems.length > 0) {
         const _day = viewableItems[0].index
         if (typeof _day == "number") {
-          // setDay(_day)
+          setDay(_day)
         }
       }
     },
@@ -212,11 +215,25 @@ export default function HomeScreen() {
     return setFavorites([item, ...favorites])
   }
 
+  const _getDate = (inx: number) => {
+    const today = new Date();
+    const dayOfWeek = today.getDay()
+    const isNextWeek = dayOfWeek === 6
+
+    const targetDate = new Date(today);
+    targetDate.setDate(today.getDate() + (isNextWeek ? inx + 1 : inx - dayOfWeek + 1));
+
+    const day = targetDate.getDate().toString().padStart(2, '0');
+    const month = (targetDate.getMonth() + 1).toString().padStart(2, '0');
+
+    return `${day}/${month}`;
+  }
+
   useEffect(() => {
     const color = theme.colors.primary
 
     navigation.setOptions({
-      title: 'RUral',
+      title: 'Início',
       headerShown: true,
       headerLeft: () => undefined,
       headerRight: () => (
@@ -243,10 +260,37 @@ export default function HomeScreen() {
 
   return (
     <ThemedView style={{ flex: 1 }}>
+      <ThemedView style={{ flexDirection: 'row', minHeight: 50 }}>
+        {STRING_DAYS.map((strDay, index) => (
+          <View style={{ justifyContent: 'center', flex: 1, backgroundColor: theme.colors.card }} key={index} >
+            <Button
+              onPress={() => setDay(index)}
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderBottomLeftRadius: day - index == -1 ? 10 : 0,
+                borderBottomRightRadius: day - index == 1 ? 10 : 0,
+                borderTopEndRadius: day - index === 0 ? 10 : 0,
+                borderTopStartRadius: day - index === 0 ? 10 : 0,
+                backgroundColor: day - index === 0 ? theme.colors.card : theme.colors.unselect
+              }}
+            >
+              <ThemedText>{strDay}</ThemedText>
+              {day === index && <ThemedText>{_getDate(index)}</ThemedText>}
+              {/* <IconSymbol name="heart"
+                color={theme.colors.primary}
+                size={10}
+              /> */}
+            </Button>
+          </View>
+        ))}
+      </ThemedView>
       <FlatList
         data={week?.data}
         ref={(flatList) => (PageFoods.current = flatList)}
         // showsHorizontalScrollIndicator={Platform.OS === 'web'}
+        onViewableItemsChanged={viewableItemsChanged}
         horizontal
         pagingEnabled
         getItemLayout={getItemLayout}
@@ -255,19 +299,19 @@ export default function HomeScreen() {
           itemVisiblePercentThreshold: 100,
         }}
         renderItem={({ item }) => (
-          <ThemedView style={{ flex: 1, width, height }}>
-            <ScrollView nestedScrollEnabled contentContainerStyle={{ paddingBottom: 110, flexGrow: 1 }}>
+          <ThemedView style={{ flex: 1, width, height, backgroundColor: theme.colors.card }}>
+            <ScrollView nestedScrollEnabled contentContainerStyle={{ paddingBottom: 250, flexGrow: 1 }}>
               {
                 Object.keys(isAlmoco ? item.almoco : item.jantar).map((key, index, _items) => {
                   const menu = isAlmoco ? item.almoco : item.jantar
                   const _itemMenu = menu[key as keyof typeof menu]
 
                   return (
-                    <ThemedView key={index} style={{ padding: 10, paddingVertical: 10, paddingBottom: index === _items.length - 1 ? 0 : 20, flexDirection: 'row', alignItems: 'center' }}>
-                      <View style={{ backgroundColor: theme.colors.primary, width: 3, height: '100%', borderRadius: 10 }} />
-                      <ThemedView style={{ flex: 1, paddingHorizontal: 10 }}>
+                    <ThemedView key={index} style={{ paddingHorizontal: 10, paddingVertical: 15, margin: 10, marginBottom: index === _items.length - 1 ? 0 : 0, flexDirection: 'row', alignItems: 'center', backgroundColor: theme.colors.card, borderRadius: 7 }}>
+                      <View style={{ backgroundColor: theme.colors.primary, width: 2, height: '100%', borderRadius: 10 }} />
+                      <ThemedView style={{ flex: 1, paddingHorizontal: 10, backgroundColor: 'transparent' }}>
                         <ThemedText style={{ fontWeight: '400', marginBottom: 1 }}>{menuKeys[key as keyof typeof menuKeys]}</ThemedText>
-                        <ThemedText style={{ fontWeight: 'bold' }}>{_itemMenu}</ThemedText>
+                        <ThemedText style={{ fontWeight: '600' }}>{_itemMenu}</ThemedText>
                       </ThemedView>
                       <Button onPress={() => _favoriteOnPress(_itemMenu)}>
                         <IconSymbol name={_checkItem(_itemMenu) ? 'heart.fill' : 'heart'} color={theme.colors.primary} />
@@ -279,15 +323,15 @@ export default function HomeScreen() {
           </ThemedView>
         )}
       />
-      <ThemedView style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-        <Button onPress={() => setIsAlmoco(true)} style={isAlmoco ? {...styles.navBtn, backgroundColor: theme.colors.background, borderColor: theme.colors.primary, borderWidth: 1, borderTopWidth: 0, elevation: 1} : {...styles.disabledNavBtn, borderTopWidth: 1, borderColor: theme.colors.primary, backgroundColor: theme.colors.unselect}}>
-          <ThemedText>Almoço</ThemedText>
+      <ThemedView style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 5, backgroundColor: theme.colors.card }}>
+        <Button onPress={() => setIsAlmoco(true)} style={isAlmoco ? { ...styles.navBtn, backgroundColor: theme.colors.card, borderColor: theme.colors.primary, borderWidth: 1, borderTopWidth: 0, elevation: 1 } : { ...styles.disabledNavBtn, borderTopWidth: 1, borderColor: theme.colors.primary, backgroundColor: theme.colors.unselect }}>
+          <ThemedText style={[{ paddingHorizontal: 10 }, isAlmoco ? { borderBottomColor: theme.colors.primary, borderBottomWidth: 1 } : {}]}>Almoço</ThemedText>
         </Button>
-        <Button onPress={() => setIsAlmoco(false)} style={!isAlmoco ? {...styles.navBtn, backgroundColor: theme.colors.background, borderColor: theme.colors.primary, borderWidth: 1, borderTopWidth: 0, elevation: 1} : {...styles.disabledNavBtn, borderTopWidth: 1, borderColor: theme.colors.primary, backgroundColor: theme.colors.unselect}}>
-          <ThemedText>Jantar</ThemedText>
+        <Button onPress={() => setIsAlmoco(false)} style={!isAlmoco ? { ...styles.navBtn, backgroundColor: theme.colors.card, borderColor: theme.colors.primary, borderWidth: 1, borderTopWidth: 0, elevation: 1 } : { ...styles.disabledNavBtn, borderTopWidth: 1, borderColor: theme.colors.primary, backgroundColor: theme.colors.unselect }}>
+          <ThemedText style={[{ paddingHorizontal: 10 }, !isAlmoco ? { borderBottomColor: theme.colors.primary, borderBottomWidth: 1 } : {}]}>Janta </ThemedText>
         </Button>
       </ThemedView>
-    </ThemedView>
+    </ThemedView >
   );
 }
 

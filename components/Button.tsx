@@ -1,10 +1,10 @@
 import React from 'react';
-import { Pressable, PressableProps } from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
-export type ButtonProps = PressableProps
+export type ButtonProps = TouchableOpacityProps
 
 export default function Button(props: ButtonProps) {
   return (
-    <Pressable hitSlop={20} {...props} />
+    <TouchableOpacity hitSlop={20} {...props} />
   )
 }

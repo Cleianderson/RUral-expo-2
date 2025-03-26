@@ -19,7 +19,8 @@ const MAPPING = {
   'bell.fill': 'notifications',
   'bell.fill.active': 'notifications-active',
   'gear': 'menu',
-  'arrow.counterclockwise': 'refresh'
+  'arrow.counterclockwise': 'refresh',
+  'trash': 'remove-circle-outline',
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],

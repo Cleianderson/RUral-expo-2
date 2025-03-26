@@ -1,109 +1,85 @@
-import { StyleSheet, Image, Platform } from 'react-native';
+import React, { useEffect, useState } from 'react'
+import Svg, { SvgProps, G, Path } from "react-native-svg"
+import { Text, FlatList, View } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { ThemedView } from '@/components/ThemedView'
+import { ThemedText } from '@/components/ThemedText'
+// import { setItem } from '~/service/Storage'
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+// import { Container, Title, Message, Content, DateText, Header } from './style'
 
-export default function TabTwoScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Avisos</ThemedText>
+type Warn = { title: '1', createdAt: '26/03/2025', content: 'content' }
+
+export default function Warn() {
+  const dispatch = useDispatch()
+  // const warns = useSelector<RootState, WarningType[] | undefined>(state => state.mainState.warns)
+  const [warns, _] = useState<Warn[]>([])
+
+  const updateThereIsWarn = async (value: boolean) => {
+    dispatch({ type: 'SET_THERE_IS_WARN', payload: { thereIsWarn: value } })
+    // await setItem('@thereIsWarn', { data: value })
+  }
+
+  const formatDate = (date: string) => {
+    let month = `0${new Date(date).getMonth() + 1}`
+    let day = `0${new Date(date).getDate()}`
+
+    const lD = day.length
+    const lM = month.length
+
+    return `${day[lD - 2]}${day[lD - 1]}/${month[lM - 2]}${month[lM - 1]}`
+  }
+
+  useEffect(() => {
+    updateThereIsWarn(false)
+  }, [])
+
+  const renderItem = ({ item }: { item: Warn }) => (
+    <ThemedView>
+      <ThemedView>
+        <ThemedText>{item.title}</ThemedText>
+        <ThemedText>{formatDate(item.createdAt)}</ThemedText>
       </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user's current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
-  );
-}
+      <ThemedView>
+        <ThemedText>{item.content}</ThemedText>
+      </ThemedView>
+    </ThemedView>
+  )
 
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-});
+  return (
+    <FlatList
+      data={warns}
+      keyExtractor={(item, index) => String(item.title + index)}
+      style={{ flex: 1, backgroundColor: '#fff' }}
+      contentContainerStyle={{
+        justifyContent: 'flex-end',
+        flexDirection: 'column-reverse',
+        // margin: 10,
+        // paddingBottom: 20,
+        flexGrow: 1
+      }}
+      renderItem={renderItem}
+      ListEmptyComponent={
+        <ThemedView
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+          <Svg
+            // xmlns="http://www.w3.org/2000/svg"
+            width={200}
+            height={200}
+            viewBox="0 0 135.467 135.467"
+          >
+            <Path
+              fill="#b8c4f0"
+              d="m79.575 31.263-1.617 3.02c10.237 8.48 13.454 23.271 6.937 35.449l-1.583 2.958a34.311 34.311 0 0 0-3.113 24.16l.465 1.929a5.702 5.702 0 0 1-2.063 5.859 5.72 5.72 0 0 1-6.185.515L11.998 72.819a5.71 5.71 0 0 1-3.001-5.431 5.724 5.724 0 0 1 3.726-4.969l1.866-.681a34.275 34.275 0 0 0 18.375-15.993l1.583-2.958c6.517-12.177 20.466-17.781 33.342-13.892l1.617-3.021a5.708 5.708 0 0 1 7.729-2.34 5.708 5.708 0 0 1 2.34 7.729zM34.124 104.09a11.425 11.425 0 0 1-5.553-6.756c-.878-2.899-.484-6.17.872-8.702l20.14 10.778c-1.357 2.533-3.859 4.675-6.757 5.552-2.899.878-6.17.484-8.702-.872z"
+            />
+            <Path
+              fill="#4c5a80"
+              d="m80.084 27.373.694 3.355c13.293-.047 25.238 9.248 28.037 22.774l.68 3.285a34.311 34.311 0 0 0 13.088 20.545l1.593 1.183a5.702 5.702 0 0 1 2.17 5.82 5.72 5.72 0 0 1-4.42 4.358l-67.104 13.882a5.71 5.71 0 0 1-5.785-2.247 5.724 5.724 0 0 1-.322-6.202l.996-1.719a34.275 34.275 0 0 0 3.863-24.051l-.68-3.286c-2.798-13.525 4.322-26.765 16.7-32.028l-.694-3.355a5.708 5.708 0 0 1 4.435-6.75 5.708 5.708 0 0 1 6.749 4.436zm11.76 85.037c-2.97.615-6.06.033-8.592-1.63-2.53-1.663-4.323-4.426-4.905-7.24l22.368-4.627c.582 2.813.033 6.061-1.63 8.592-1.663 2.53-4.427 4.323-7.24 4.905z"
+            />
+          </Svg>
+          <ThemedText style={{ textAlign: 'center' }} >Sem avisos por enquanto</ThemedText>
+        </ ThemedView>
+      }
+    />
+  )
+}
