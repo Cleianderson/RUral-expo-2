@@ -1,6 +1,7 @@
 import { useTheme } from '@react-navigation/native';
 import { useState } from 'react';
 import { View, ViewProps, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { ThemedText } from './ThemedText';
 
 type Props = ViewProps & { options: string[]; onSelect: (value: string) => void }
 
@@ -25,7 +26,7 @@ const RadioButton = ({ options, onSelect, ...props }: Props) => {
           <View style={[styles.outerCircle, { borderColor: colors.primary }]}>
             {selected === option && <View style={[styles.innerCircle, { backgroundColor: colors.primary }]} />}
           </View>
-          <Text style={styles.label}>{option}</Text>
+          <ThemedText style={styles.label}>{option}</ThemedText>
         </TouchableOpacity>
       ))}
     </View>

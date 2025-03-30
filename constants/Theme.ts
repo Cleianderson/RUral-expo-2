@@ -1,3 +1,4 @@
+import chroma from 'chroma-js'
 import { DarkTheme, DefaultTheme } from "@react-navigation/native";
 
 export const Themes = {
@@ -16,9 +17,9 @@ export const Themes = {
     colors: {
       ...DarkTheme.colors,
       primary: 'rgb(226, 203, 164)',
-      background: 'rgb(43, 43, 43)',
-      card: 'rgb(35, 35, 35)',
-      unselect: 'rgb(63, 63, 63)',
+      background: chroma(DarkTheme.colors.background).brighten(0.85).hex(),
+      card: chroma(DarkTheme.colors.background).brighten(0.45).hex(),
+      unselect: chroma(DarkTheme.colors.background).brighten(0.85).hex(),
       text_contrast: 'rgb(43, 43, 43)'
     }
   },

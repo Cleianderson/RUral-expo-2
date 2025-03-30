@@ -44,7 +44,7 @@ export default function Configuration() {
         }}
       >
         <ThemedText
-          style={{ backgroundColor: colors.notification, padding: 5, textAlign: 'center', borderRadius: 2 }}
+          style={{ color: '#fff', fontWeight: '600', backgroundColor: colors.notification, padding: 5, textAlign: 'center', borderRadius: 2 }}
         >LIMPAR TODOS OS DADOS</ThemedText>
       </Button>
     </ScrollView>

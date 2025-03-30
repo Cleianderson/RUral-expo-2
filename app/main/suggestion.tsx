@@ -26,9 +26,9 @@ export default function TabTwoScreen() {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 20, backgroundColor: colors.card, justifyContent: 'center' }}>
-      <ThemedView style={{ backgroundColor: colors.background, borderRadius: 10, padding: 30, elevation: 5 }}>
-        <ThemedView style={{ minHeight: '45%', justifyContent: 'space-around' }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 20, justifyContent: 'center' }}>
+      <ThemedView style={{ backgroundColor: colors.card, borderRadius: 10, padding: 30, elevation: 5 }}>
+        <ThemedView style={{ minHeight: '45%', justifyContent: 'space-around', backgroundColor: 'transparent' }}>
           <ThemedText style={{ fontSize: 16 }}>
             Escolha o tipo de sugestão <ThemedText style={{ color: colors.notification }}>*</ThemedText>
           </ThemedText>
@@ -51,7 +51,7 @@ export default function TabTwoScreen() {
             <ThemedText style={{ color: colors.notification }}>*</ThemedText> - Campo obrigatório{' '}
           </ThemedText>
         </ThemedView>
-        <ThemedView>
+        <ThemedView style={{ backgroundColor: 'transparent' }}>
           <Button onPress={postSuggestion} accessibilityLabel="Enviar sugestão">
             <ThemedText
               style={{

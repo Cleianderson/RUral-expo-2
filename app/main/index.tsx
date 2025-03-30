@@ -138,7 +138,7 @@ export default function HomeScreen() {
         {(day !== undefined && day >= 0) && STRING_DAYS.map((strDay, index) => (
           <View style={{ justifyContent: 'center', flex: 1, backgroundColor: theme.colors.card }} key={index} >
             <Button
-              onPress={() => setDay(index)}
+              onPress={() => PageFoods.current?.scrollToIndex({ index })}
               style={{
                 flex: 1,
                 justifyContent: 'center',
@@ -181,7 +181,7 @@ export default function HomeScreen() {
                   const _itemMenu = menu[key as keyof typeof menu]
 
                   return (
-                    <ThemedView key={index} style={{ paddingHorizontal: 10, paddingVertical: 15, margin: 10, marginBottom: index === _items.length - 1 ? 0 : 0, flexDirection: 'row', alignItems: 'center', backgroundColor: theme.colors.card, borderRadius: 7 }}>
+                    <ThemedView key={index} style={{ borderColor: theme.colors.border, borderBottomWidth: 1, paddingHorizontal: 10, paddingVertical: 15, margin: 10, marginBottom: index === _items.length - 1 ? 0 : 0, flexDirection: 'row', alignItems: 'center', backgroundColor: theme.colors.card, borderRadius: 7 }}>
                       <View style={{ backgroundColor: theme.colors.primary, width: 2, height: '100%', borderRadius: 10 }} />
                       <ThemedView style={{ flex: 1, paddingHorizontal: 10, backgroundColor: 'transparent' }}>
                         <ThemedText style={{ fontWeight: '400', marginBottom: 1 }}>{menuKeys[key as keyof typeof menuKeys]}</ThemedText>
