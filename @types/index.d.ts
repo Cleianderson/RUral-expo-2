@@ -23,22 +23,36 @@ declare type Week = {
 
 declare type RootState = {
   mainState: MainState,
-  requestState: RequestState,
-  storageState: Storage
+  // requestState: RequestState,
+  // storageState: Storage
 }
 
 declare type MainState = {
-  warns: WarningType[] | undefined, // setWarns: Dispatch<SetStateAction<WarningType[] | undefined>>
-  foods: Table[] | undefined, // setFoods: Dispatch<SetStateAction<Table[] | undefined>>
-  week?: Week, // setFoods: Dispatch<SetStateAction<Table[] | undefined>>
-  favorites: string[] | undefined, //  setFavorites: Dispatch<SetStateAction<string[]>>,
-  day: number | undefined, // setDay: (d: number) => void,
-  // homeViewPage: JSX.Element | undefined, //  setHomeViewPage: Dispatch<SetStateAction<JSX.Element | undefined>>,
-  homeView: JSX.Element | undefined, //  setHomeViewPage: Dispatch<SetStateAction<JSX.Element | undefined>>,
-  // addFavorites: (str: string) => Promise<void>,
-  // removeFavorites: (str: string) => void,
-  thereIsWarn: boolean, // setThereIsWarn: Dispatch<SetStateAction<boolean>>,
-  // updateThereIsWarn: (bool: boolean) => {},
+  warns: [],
+  foods: Table[] | undefined,
+  week: Week,
+  day: number | undefined,
+  homeView: JSX.Element | undefined,
+  thereIsWarn: boolean,
+  acceptedNotification: boolean | undefined,
+  configurations: object,
+  favorites: string[],
+  isOnboarded: boolean | undefined,
+  menu: [],
+  newWarning: boolean | undefined,
+  questions: [],
+  warnings: [],
+  // warns: WarningType[] | undefined, // setWarns: Dispatch<SetStateAction<WarningType[] | undefined>>
+  // foods: Table[] | undefined, // setFoods: Dispatch<SetStateAction<Table[] | undefined>>
+  // week?: Week, // setFoods: Dispatch<SetStateAction<Table[] | undefined>>
+  // favorites: string[] | undefined, //  setFavorites: Dispatch<SetStateAction<string[]>>,
+  // day: number | undefined, // setDay: (d: number) => void,
+  // // homeViewPage: JSX.Element | undefined, //  setHomeViewPage: Dispatch<SetStateAction<JSX.Element | undefined>>,
+  // homeView: JSX.Element | undefined, //  setHomeViewPage: Dispatch<SetStateAction<JSX.Element | undefined>>,
+  // // addFavorites: (str: string) => Promise<void>,
+  // // removeFavorites: (str: string) => void,
+  // thereIsWarn: boolean, // setThereIsWarn: Dispatch<SetStateAction<boolean>>,
+  // // updateThereIsWarn: (bool: boolean) => {},
 }
 
 declare type RequestState = {

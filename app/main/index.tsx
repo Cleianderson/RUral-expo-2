@@ -1,13 +1,16 @@
-import { FlatList, Platform, ScrollView, StyleSheet, useWindowDimensions, View, ViewToken } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, useWindowDimensions, View, ViewToken } from 'react-native';
 
 import Button from '@/components/Button';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useTheme } from '@react-navigation/native';
-import { Themes } from '@/constants/Theme'
+import { Themes } from '@/constants/Theme';
 import { useNavigation, useRouter } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
+import { Sagas } from '@/constants/Sagas';
 
 type FlatViewableChanged = (info: {
   viewableItems: Array<ViewToken>
@@ -33,155 +36,22 @@ export default function HomeScreen() {
   const navigation = useNavigation()
   const router = useRouter()
   const theme = useTheme() as typeof Themes.dark | typeof Themes.light
+  const dispatch = useDispatch()
 
   const { width, height } = useWindowDimensions()
   const PageFoods = useRef<FlatList<any> | null>(null)
   const [isAlmoco, setIsAlmoco] = useState(true)
-  const [favorites, setFavorites] = useState(['berinjela', 'bife', 'frango'])
-  const [day, setDay] = useState(new Date().getDay())
 
   const STRING_DAYS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex']
 
-  const week = {
-    "_id": "67cee120eb392a014d2846a7",
-    "data": [
-      {
-        "almoco": {
-          "p1": "BIFE DE PANELA",
-          "p2": "BIFE",
-          "gre": "ISCA DE CARNE ACEBOLADA",
-          "fag": "FESTIVAL DE MASSAS",
-          "veg": "BERINJELA À \nPARMEGINA (CONTÉM\nOVOS, LEITE E \nDERIVADOS) BERINJELA\nÀ MILANESA",
-          "gua": "ABOBRINHA REFOGADA-ARROZ COM ERVILHAS-FEIJÃO CARIOCA",
-          "sal": "MIX DE FOLHAS COM MILHO VERDE",
-          "sco": "CENOURA COM VAGEM",
-          "sob": "MELANCIA",
-          "suc": "UVA/TANGERINA"
-        },
-        "jantar": {
-          "p1": "FRANGO GRELHADO ACEBOLADO",
-          "p2": "ESCONDIDINHO DE ABÓBORA COM CHARQUE",
-          "gre": "FRANGO AO FORNO COM ERVAS",
-          "veg": "STROGONOFF DE GRÃO DE\nBICO (CONTÉM LEITE E\nERIVADOS) / BOBÓ DE \nGRÃO DE\nBICO",
-          "fag": "CROQUETE DE FRANGO",
-          "gua": "ARROZ REFOGADO",
-          "sopa": "SOPA CREME DE CEBOLA",
-          "sal": "SALADA DE ACELGA C/ TOMATE",
-          "sob": "MELANCIA",
-          "suc": "UVA/TANGERINA"
-        }
-      },
-      {
-        "almoco": {
-          "p1": "FRANGO GRELHADO COM ALHO FRITO",
-          "p2": "ALMÔNDEGAS AO MOLHO CONCASSÊ",
-          "gre": "PEITO DE FRANGO AO VINAGRETE",
-          "fag": "FRANGO, OVOS E BATATA FRITAS",
-          "veg": "ALMÔNDEGAS ",
-          "gua": "ESPAGUETE- ARROZ COM CEBOLINHO- FEIJÃO PRETO",
-          "sal": "FOLHAS COM TOMATE E PEPINO",
-          "sco": "ABÓBORA COM CEBOLA ROXA",
-          "sob": "COMPOTA DE BANANA",
-          "suc": "ACEROLA/ ABACAXI COM HORTELÃ"
-        },
-        "jantar": {
-          "p1": "COPA LOMBO COM ABACAXI",
-          "p2": "BOBÓ DE FRANGO",
-          "gre": "BIFE GRELHADO COM CEBOLA ROXA AGRIDOCE",
-          "veg": "CROQUETE DE BATATA DOCE",
-          "fag": "BAIÃO DE DOIS",
-          "gua": "BATATA DOCE",
-          "sopa": "MUNGUZÁ",
-          "sal": "MIX DE FOLHAS COM FRUTAS",
-          "sob": "COMPOTA DE BANANA",
-          "suc": "ACEROLA/ ABACAXI COM HORTELÃ"
-        }
-      },
-      {
-        "almoco": {
-          "p1": "PERNIL COM CEBOLA ROXA AGRIDOCE",
-          "p2": "FRANGO À LÁ KING",
-          "gre": "PEIXE COM ABÓBORA",
-          "fag": "RISOTO",
-          "veg": "NHOQUE VEGETARIANO\nCOM BOLONHESA DE\nLENTILHA (CONTÉM\nLEITE E DERIVADOS)\nNHOQUE \nVEGANO",
-          "gua": "LEGUMES SAUTÉ- ARROZ CARIOCA- FEIJÃO CARIOCA",
-          "sal": "SALADA ARCO IRIS",
-          "sco": "ABOBRINHA COM ERVAS",
-          "sob": "MAMÃO",
-          "suc": "MANGA/ LIMÃO"
-        },
-        "jantar": {
-          "p1": "FRANGO AO FORNO COM AVEIA",
-          "p2": "BIFE AO MOLHO FERRUGEM",
-          "gre": "FRANGO COM PURÊ DE BATATA DOCE",
-          "veg": "ESCONDIDINHO DE SOJA\n(CONTÉM LEITE E\nDERIVADOS)\nESCONDIDINHO\nVEGANO",
-          "fag": "FRANGO À PARMEGIANA",
-          "gua": "CUSCUZ",
-          "sopa": "SOPA DE ABÓBORA",
-          "sal": "MIX DE FOLHAS COM CEBOLA ROXA",
-          "sob": "MAMÃO",
-          "suc": "MANGA/ LIMÃO"
-        }
-      },
-      {
-        "almoco": {
-          "p1": "FILÉ DE FRANGO COM ERVAS",
-          "p2": "PICADINHO AO MOLHO MADEIRA",
-          "gre": "FRANGO AO FORNO COM BATATA DOCE RÚSTICA",
-          "fag": "LASANHA DE FRANGO",
-          "veg": "DOBRADINHA VEGETARIANA",
-          "gua": "CHUCHU GRATINADO- ARROZ COM CENOURA- FEIJÃO PRETO",
-          "sal": "MIX DE FOLHAS COM LARANJA",
-          "sco": "SALADA NORDESTINA",
-          "sob": "CREME ROSÊ",
-          "suc": "TAMARINDO/ GOIABA"
-        },
-        "jantar": {
-          "p1": "FIGADO À LISBOETA",
-          "p2": "FRANGO AO VINAGRETE",
-          "gre": "GUISADINHO COM LEGUMES",
-          "veg": "ACARAJÉ ",
-          "fag": "CHEESEBURGUER COM FRITAS",
-          "gua": "MACAXEIRA",
-          "sopa": "CANJA",
-          "sal": "PEPINO AGRIDOCE",
-          "sob": "CREME ROSÊ",
-          "suc": "TAMARINDO/ GOIABA"
-        }
-      },
-      {
-        "almoco": {
-          "p1": "DOBRADINHA",
-          "p2": "FRANGO AO FORNO COM ABACAXI",
-          "gre": "ISCA DE CARNE COM LEGUMES",
-          "fag": "ARRUMADINHO",
-          "veg": "QUICHE DE CEBOLA\n(CONTÉM LEITE E\nDERIVADOS) TOMATE\nRECHEADA\nVEGANA",
-          "gua": "FAROFA DOURADA- ARROZ BRANCO- FEIJÃO CARIOCA",
-          "sal": "SALADA AMERICANA",
-          "sco": "SALADA DE LEGUMES",
-          "sob": "LARANJA",
-          "suc": "GRAVIOLA/ CAJU"
-        },
-        "jantar": {
-          "p1": "FILÉ DE FRANGO GRELHADO COM ERVILHAS",
-          "p2": "SILVEIRINHA DE CARNE MOIDA",
-          "gre": "PEIXE COM GERGELIM",
-          "veg": "LASANHA VEGETARIANA\n(CONTÉM LEITE E\nDERIVADOS) / LASANHA\nVEGANA",
-          "fag": "FRANGO À KIEV",
-          "gua": "ESPAGUETE",
-          "sopa": "SOPA DE LEGUMES",
-          "sal": "REPOLHO BICOLOR COM FRUTAS",
-          "sob": "LARANJA",
-          "suc": "GRAVIOLA/ CAJU"
-        }
-      }
-    ],
-    "number_week": 11,
-    "year": 2025,
-    "createdAt": "2025-03-10T12:54:56.590Z",
-    "updatedAt": "2025-03-10T12:54:56.590Z",
-    "__v": 0
-  }
+  const week = useSelector<RootState, Week | undefined>((state) => state.mainState.week)
+  const day = useSelector<RootState, number | undefined>((state) => state.mainState.day)
+  const favorites = useSelector<RootState, string[] | undefined>((state) => state.mainState.favorites)
+
+
+  const setDay = (num: number) => dispatch(Sagas.setDay(num))
+  const addFavorites = (item: string) => dispatch(Sagas.addFavorites(item))
+  const delFavorites = (item: string) => dispatch(Sagas.deleteFavorites(item))
 
   const viewableItemsChanged = useCallback<FlatViewableChanged>(
     ({ viewableItems }) => {
@@ -199,34 +69,38 @@ export default function HomeScreen() {
     { length: width, offset: width * index, index }
   )
 
-  const _checkItem = (item: string) => (
-    favorites.some(favorite => favorite.toUpperCase().includes(item.toUpperCase()) || item.toUpperCase().includes(favorite.toUpperCase()))
-  )
+  const _checkItem = (item: string) => {
+    if (favorites === undefined) return false
+
+    return favorites.some(favorite => favorite.toUpperCase().includes(item.toUpperCase()) || item.toUpperCase().includes(favorite.toUpperCase()))
+  }
+
 
   const _favoriteOnPress = (item: string) => {
     if (_checkItem(item)) {
-      const _favorites = favorites.filter(favorite => (
-        favorite.toUpperCase() !== item.toUpperCase() || item.toUpperCase().includes(favorite.toUpperCase()) === false
+      const _favorites = favorites?.filter(favorite => (
+        favorite.toUpperCase() === item.toUpperCase()
       ))
 
-      return setFavorites(_favorites)
+      for (let fav of _favorites ?? []) {
+        delFavorites(fav)
+      }
+      return 0
     }
 
-    return setFavorites([item, ...favorites])
+    return addFavorites(item)
   }
 
-  const _getDate = (inx: number) => {
-    const today = new Date();
-    const dayOfWeek = today.getDay()
-    const isNextWeek = dayOfWeek === 6
+  function _getDate(inx: number) {
+    let date: moment.Moment
 
-    const targetDate = new Date(today);
-    targetDate.setDate(today.getDate() + (isNextWeek ? inx + 1 : inx - dayOfWeek + 1));
+    if (moment().add(1, 'days').isoWeek() !== moment().isoWeek()) {
+      date = moment().add(1, 'days').isoWeekday(inx + 1)
+    } else {
+      date = moment().isoWeekday(inx + 1)
+    }
 
-    const day = targetDate.getDate().toString().padStart(2, '0');
-    const month = (targetDate.getMonth() + 1).toString().padStart(2, '0');
-
-    return `${day}/${month}`;
+    return date.format('DD/MM')
   }
 
   useEffect(() => {
@@ -261,7 +135,7 @@ export default function HomeScreen() {
   return (
     <ThemedView style={{ flex: 1 }}>
       <ThemedView style={{ flexDirection: 'row', minHeight: 50 }}>
-        {STRING_DAYS.map((strDay, index) => (
+        {(day !== undefined && day >= 0) && STRING_DAYS.map((strDay, index) => (
           <View style={{ justifyContent: 'center', flex: 1, backgroundColor: theme.colors.card }} key={index} >
             <Button
               onPress={() => setDay(index)}

@@ -1,13 +1,13 @@
 import { configureStore, Tuple } from "@reduxjs/toolkit"
 import createSagaMiddleware from "redux-saga"
 
-import rootReducer from "@/reducers"
+import reducer from "@/reducers"
 import storageSaga from "@/sagas/Storage"
 
 const sagaMiddleware = createSagaMiddleware()
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer,
   middleware: ()=> new Tuple(sagaMiddleware),
 })
 

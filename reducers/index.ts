@@ -6,8 +6,8 @@ import { storageReducer } from "@/reducers/storageReducer"
 
 const rootReducer = combineReducers({
   mainState: mainReducer,
-  requestState: requestReducer,
-  storageState: storageReducer,
+  // requestState: requestReducer,
+  // storageState: storageReducer,
 })
 
 export default rootReducer

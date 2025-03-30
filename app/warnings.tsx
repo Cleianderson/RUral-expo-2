@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import Svg, { SvgProps, G, Path } from "react-native-svg"
-import { Text, FlatList, View } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import Svg, { Path } from "react-native-svg"
+import { FlatList } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { ThemedView } from '@/components/ThemedView'
 import { ThemedText } from '@/components/ThemedText'
+import { Sagas } from '@/constants/Sagas'
 // import { setItem } from '~/service/Storage'
 
 // import { Container, Title, Message, Content, DateText, Header } from './style'
@@ -16,7 +17,8 @@ export default function Warn() {
   const [warns, _] = useState<Warn[]>([])
 
   const updateThereIsWarn = async (value: boolean) => {
-    dispatch({ type: 'SET_THERE_IS_WARN', payload: { thereIsWarn: value } })
+    // dispatch({ type: 'SET_THERE_IS_WARN', payload: { thereIsWarn: value } })
+    dispatch(Sagas.setThereIsWarning(value))
     // await setItem('@thereIsWarn', { data: value })
   }
 
