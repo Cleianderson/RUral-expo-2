@@ -47,6 +47,7 @@ export default function HomeScreen() {
   const week = useSelector<RootState, Week | undefined>((state) => state.mainState.week)
   const day = useSelector<RootState, number | undefined>((state) => state.mainState.day)
   const favorites = useSelector<RootState, string[] | undefined>((state) => state.mainState.favorites)
+  const { showIndicator, showDateOnIndicator } = useSelector<RootState, Configurations>((state) => state.mainState.configurations)
 
 
   const setDay = (num: number) => dispatch(Sagas.setDay(num))
@@ -134,8 +135,8 @@ export default function HomeScreen() {
 
   return (
     <ThemedView style={{ flex: 1 }}>
-      <ThemedView style={{ flexDirection: 'row', minHeight: 50 }}>
-        {(day !== undefined && day >= 0) && STRING_DAYS.map((strDay, index) => (
+      <ThemedView style={{ flexDirection: 'row', minHeight: showIndicator ? 50 : null }}>
+        {(day !== undefined && day >= 0 && showIndicator) && STRING_DAYS.map((strDay, index) => (
           <View style={{ justifyContent: 'center', flex: 1, backgroundColor: theme.colors.card }} key={index} >
             <Button
               onPress={() => PageFoods.current?.scrollToIndex({ index })}
@@ -151,7 +152,7 @@ export default function HomeScreen() {
               }}
             >
               <ThemedText>{strDay}</ThemedText>
-              {day === index && <ThemedText>{_getDate(index)}</ThemedText>}
+              {(day === index && showDateOnIndicator) && <ThemedText>{_getDate(index)}</ThemedText>}
               {/* <IconSymbol name="heart"
                 color={theme.colors.primary}
                 size={10}

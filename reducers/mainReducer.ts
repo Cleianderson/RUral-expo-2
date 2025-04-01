@@ -1,9 +1,12 @@
 interface Action {
   type: string
-  payload: { data: any, value: any }
+  payload: { data: any; value: any }
 }
 
-type Reduce = (state: typeof initialState, action: Action) => typeof initialState;
+type Reduce = (
+  state: typeof initialState,
+  action: Action
+) => typeof initialState
 
 const initialState = {
   warns: [],
@@ -12,7 +15,7 @@ const initialState = {
   homeView: undefined,
   thereIsWarn: false,
   acceptedNotification: undefined,
-  configurations: {},
+  configurations: { showIndicator: true, showDateOnIndicator: true },
   favorites: [],
   isOnboarded: undefined,
   menu: [],
@@ -21,22 +24,39 @@ const initialState = {
   warnings: [],
 }
 
-
 export const mainReducer: Reduce = (state = initialState, action) => {
-  const SET_DAY: Reduce = (state, action) => ({ ...state, day: action.payload.value })
+  const SET_DAY: Reduce = (state, action) => ({
+    ...state,
+    day: action.payload.value,
+  })
 
-  const SET_FOODS: Reduce = (state, action) => ({ ...state, foods: action.payload.value })
+  const SET_FOODS: Reduce = (state, action) => ({
+    ...state,
+    foods: action.payload.value,
+  })
 
-  const SET_WEEK: Reduce = (state, action) => ({ ...state, week: action.payload.value })
+  const SET_WEEK: Reduce = (state, action) => ({
+    ...state,
+    week: action.payload.value,
+  })
 
-  const SET_WARN: Reduce = (state, action) => ({ ...state, warns: action.payload.value })
+  const SET_WARN: Reduce = (state, action) => ({
+    ...state,
+    warns: action.payload.value,
+  })
 
-  const SET_THERE_IS_WARN: Reduce = (state, action) => ({ ...state, thereIsWarn: action.payload.value })
+  const SET_THERE_IS_WARN: Reduce = (state, action) => ({
+    ...state,
+    thereIsWarn: action.payload.value,
+  })
 
-  const SET_HOME_VIEW: Reduce = (state, action) => ({ ...state, homeView: action.payload.value })
+  const SET_HOME_VIEW: Reduce = (state, action) => ({
+    ...state,
+    homeView: action.payload.value,
+  })
 
   const REMOVE_FAVORITES: Reduce = (state, action) => {
-    const favs = state.favorites?.filter(fav => fav !== action.payload.value)
+    const favs = state.favorites?.filter((fav) => fav !== action.payload.value)
     return { ...state, favorites: favs }
   }
 
@@ -46,7 +66,11 @@ export const mainReducer: Reduce = (state = initialState, action) => {
   }
 
   const SET_CONFIGURATIONS: Reduce = (state, action) => {
-    return state
+    const _state = {
+      ...state,
+      configurations: { ...state.configurations, ...action.payload.value },
+    }
+    return _state
   }
 
   const SET_FAVORITES: Reduce = (state, action) => {

@@ -1,16 +1,16 @@
 declare type Table = {
   [key: string]: string | {
-      suc: string,
-      p1: string,
-      p2: string,
-      gua: string,
-      sob: string,
-      veg: string,
-      gre: string,
-      fag: string,
-      sal: string,
-      sco?: string,
-      sopa?: string
+    suc: string,
+    p1: string,
+    p2: string,
+    gua: string,
+    sob: string,
+    veg: string,
+    gre: string,
+    fag: string,
+    sal: string,
+    sco?: string,
+    sopa?: string
   }
 }
 
@@ -35,7 +35,7 @@ declare type MainState = {
   homeView: JSX.Element | undefined,
   thereIsWarn: boolean,
   acceptedNotification: boolean | undefined,
-  configurations: object,
+  configurations: Configurations,
   favorites: string[],
   isOnboarded: boolean | undefined,
   menu: [],
@@ -62,4 +62,9 @@ declare type RequestState = {
   isVisible: boolean,
   isRequesting: boolean | undefined,
   success: boolean | undefined
+}
+
+interface Configurations {
+  showIndicator: boolean
+  showDateOnIndicator: boolean
 }

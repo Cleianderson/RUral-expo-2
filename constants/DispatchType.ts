@@ -17,5 +17,8 @@ export enum DispatchType {
   setSuccess = "SET_SUCCESS",
   updateWeek = "UPDATE_WEEK",
   setDay = "SET_DAY",
-  setThereIsWarning = "SET_THERE_IS_WARN"
+  setThereIsWarning = "SET_THERE_IS_WARN",
+  setConfigurations = "SET_CONFIGURATIONS",
+  getConfigurations = "GET_CONFIGURATIONS",
+  updateConfigurations = "UPDATE_CONFIGURATIONS"
 }
