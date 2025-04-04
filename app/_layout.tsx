@@ -9,19 +9,25 @@ import store from "@/store";
 // import Requesting from "@/components/Requesting"
 // import Config from "@/providers/Config"
 
-export default function RootLayout() {
+function ThemeContainer() {
   const colorScheme = useColorScheme();
-
   return (
     <ThemeProvider value={colorScheme === 'dark' ? Themes.dark : Themes.light}>
-      <Provider store={store}>
-        <Stack>
-          <Stack.Screen name='main' options={{ headerShown: false }} />
-          <Stack.Screen name='+not-found' />
-          <Stack.Screen name='warnings' options={{ title: 'Avisos' }} />
-          <Stack.Screen name='configs' options={{ title: 'Configurações' }} />
-        </Stack>
-      </Provider>
+      <Stack>
+        <Stack.Screen name='main' options={{ headerShown: false }} />
+        <Stack.Screen name='+not-found' />
+        <Stack.Screen name='warnings' options={{ title: 'Avisos' }} />
+        <Stack.Screen name='configs' options={{ title: 'Configurações' }} />
+      </Stack>
     </ThemeProvider>
+  )
+}
+
+export default function RootLayout() {
+
+  return (
+    <Provider store={store}>
+      <ThemeContainer />
+    </Provider>
   )
 }

@@ -8,17 +8,22 @@ type Reduce = (
   action: Action
 ) => typeof initialState
 
-const initialState = {
+const initialState: MainState = {
   warns: [],
   foods: undefined,
   day: undefined,
   homeView: undefined,
   thereIsWarn: false,
   acceptedNotification: undefined,
-  configurations: { showIndicator: true, showDateOnIndicator: true },
+  configurations: {
+    showIndicator: true,
+    showDateOnIndicator: true,
+    darkTheme: true,
+  },
   favorites: [],
   isOnboarded: undefined,
   menu: [],
+  week: undefined,
   newWarning: undefined,
   questions: [],
   warnings: [],

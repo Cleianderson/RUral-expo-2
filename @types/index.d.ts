@@ -30,7 +30,7 @@ declare type RootState = {
 declare type MainState = {
   warns: [],
   foods: Table[] | undefined,
-  week: Week,
+  week: Week | undefined,
   day: number | undefined,
   homeView: JSX.Element | undefined,
   thereIsWarn: boolean,
@@ -67,4 +67,5 @@ declare type RequestState = {
 interface Configurations {
   showIndicator: boolean
   showDateOnIndicator: boolean
+  darkTheme: boolean
 }

@@ -16,30 +16,44 @@ export default function Configuration() {
   const { colors } = useTheme()
   const dispatch = useDispatch()
 
-  const configs = useSelector<RootState, Configurations>(state => state.mainState.configurations)
-  const { showIndicator, showDateOnIndicator } = configs
+  const configs = useSelector<RootState, Configurations>(
+    (state) => state.mainState.configurations
+  )
+  const { showIndicator, showDateOnIndicator, darkTheme } = configs
 
-  const updateConfig = (data: any) =>
-    dispatch(Sagas.updateConfigurations(data))
+  const updateConfig = (data: any) => dispatch(Sagas.updateConfigurations(data))
 
   const CONFIGS = [
     {
-      title: 'Datas',
+      title: 'Indicador do dia',
       data: [
         {
           type: 'switch',
-          label: 'Mostrar indicador de datas',
+          label: 'Mostrar indicador',
           isActived: showIndicator,
           onPress: () => updateConfig({ showIndicator: !showIndicator }),
         },
         {
           type: 'switch',
-          label: 'Mostrar datas',
+          label: 'Mostrar data',
           nested: true,
           disabled: showIndicator === false,
           isActived: showDateOnIndicator,
           onPress: () =>
             updateConfig({ showDateOnIndicator: !showDateOnIndicator }),
+        },
+      ],
+    },
+    {
+      title: 'Aparência',
+      data: [
+        {
+          type: 'switch',
+          label: 'Tema escuro',
+          disabled: false,
+          nested: true,
+          isActived: darkTheme,
+          onPress: () => updateConfig({ darkTheme: !darkTheme }),
         },
       ],
     },
@@ -58,6 +72,7 @@ export default function Configuration() {
               fontSize: 20,
               fontWeight: 700,
               paddingBottom: 10,
+              paddingTop: 20,
             }}
           >
             {item.section.title}
