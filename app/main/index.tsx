@@ -108,7 +108,7 @@ export default function HomeScreen() {
     const color = theme.colors.primary
 
     navigation.setOptions({
-      title: 'Início',
+      title: 'RUral',
       headerShown: true,
       headerLeft: () => undefined,
       headerRight: () => (
@@ -175,26 +175,60 @@ export default function HomeScreen() {
         }}
         renderItem={({ item }) => (
           <ThemedView style={{ flex: 1, width, height, backgroundColor: theme.colors.card }}>
-            <ScrollView nestedScrollEnabled contentContainerStyle={{ paddingBottom: 250, flexGrow: 1 }}>
-              {
-                Object.keys(isAlmoco ? item.almoco : item.jantar).map((key, index, _items) => {
-                  const menu = isAlmoco ? item.almoco : item.jantar
-                  const _itemMenu = menu[key as keyof typeof menu]
+            <FlatList
+              data={Object.keys(isAlmoco ? item.almoco : item.jantar)} // Use keys as data
+              keyExtractor={(key) => key} // Ensure unique keys
+              contentContainerStyle={{ paddingBottom: 250, flexGrow: 1 }}
+              renderItem={({ item: key, index }) => {
+                const menu = isAlmoco ? item.almoco : item.jantar
+                const _itemMenu = menu[key as keyof typeof menu]
 
-                  return (
-                    <ThemedView key={index} style={{ borderColor: theme.colors.border, borderBottomWidth: 1, paddingHorizontal: 10, paddingVertical: 15, margin: 10, marginBottom: index === _items.length - 1 ? 0 : 0, flexDirection: 'row', alignItems: 'center', backgroundColor: theme.colors.card, borderRadius: 7 }}>
-                      <View style={{ backgroundColor: theme.colors.primary, width: 2, height: '100%', borderRadius: 10 }} />
-                      <ThemedView style={{ flex: 1, paddingHorizontal: 10, backgroundColor: 'transparent' }}>
-                        <ThemedText style={{ fontWeight: '400', marginBottom: 1 }}>{menuKeys[key as keyof typeof menuKeys]}</ThemedText>
-                        <ThemedText style={{ fontWeight: '600' }}>{_itemMenu}</ThemedText>
-                      </ThemedView>
-                      <Button onPress={() => _favoriteOnPress(_itemMenu)}>
-                        <IconSymbol name={_checkItem(_itemMenu) ? 'heart.fill' : 'heart'} color={theme.colors.primary} />
-                      </Button>
-                    </ThemedView>)
-                })
-              }
-            </ScrollView>
+                return (
+                  <ThemedView
+                    key={index}
+                    style={{
+                      borderColor: theme.colors.border,
+                      borderBottomWidth: 1,
+                      paddingHorizontal: 10,
+                      paddingVertical: 15,
+                      margin: 10,
+                      marginBottom: index === Object.keys(menu).length - 1 ? 0 : 0,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      backgroundColor: theme.colors.card,
+                      borderRadius: 7,
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: theme.colors.primary,
+                        width: 2,
+                        height: '100%',
+                        borderRadius: 10,
+                      }}
+                    />
+                    <ThemedView
+                      style={{
+                        flex: 1,
+                        paddingHorizontal: 10,
+                        backgroundColor: 'transparent',
+                      }}
+                    >
+                      <ThemedText style={{ fontWeight: '400', marginBottom: 1 }}>
+                        {menuKeys[key as keyof typeof menuKeys]}
+                      </ThemedText>
+                      <ThemedText style={{ fontWeight: '600' }}>{_itemMenu}</ThemedText>
+                    </ThemedView>
+                    <Button onPress={() => _favoriteOnPress(_itemMenu)}>
+                      <IconSymbol
+                        name={_checkItem(_itemMenu) ? 'heart.fill' : 'heart'}
+                        color={theme.colors.primary}
+                      />
+                    </Button>
+                  </ThemedView>
+                )
+              }}
+            />
           </ThemedView>
         )}
       />
