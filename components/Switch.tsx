@@ -46,9 +46,9 @@ const SwitchLabeled: React.FC<Props> = ({
           disabled={disabled}
           value={isActived}
           onValueChange={onPress}
-          thumbColor={colors.primary}
+          thumbColor={disabled ? undefined : colors.primary}
           trackColor={{
-            true: chroma(colors.primary).brighten(2.5).hex(),
+            true: disabled ? chroma(colors.text).tint(0.25).hex() : chroma(colors.primary).brighten(2.5).hex(),
             false: '#666',
           }}
         />
