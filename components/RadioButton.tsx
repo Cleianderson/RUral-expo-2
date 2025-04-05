@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { View, ViewProps, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { ThemedText } from './ThemedText';
 
-type Props = ViewProps & { options: string[]; onSelect: (value: string) => void }
+type Props = ViewProps & { options: string[]; initialValue: string; onSelect: (value: string) => void }
 
-const RadioButton = ({ options, onSelect, ...props }: Props) => {
+const RadioButton = ({ options, onSelect, initialValue, ...props }: Props) => {
   const { colors } = useTheme()
 
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string | null>(initialValue);
 
   const handlePress = (option: string) => {
     setSelected(option);

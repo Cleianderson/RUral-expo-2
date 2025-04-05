@@ -21,6 +21,8 @@ const MAPPING = {
   'gear': 'menu',
   'arrow.counterclockwise': 'refresh',
   'trash': 'remove-circle-outline',
+  'checkmark.circle': 'check-circle-outline',
+  'multiply': 'close'
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],
