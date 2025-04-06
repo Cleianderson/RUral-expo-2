@@ -1,46 +1,118 @@
-import CheckBox from 'expo-checkbox';
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import { useState } from 'react';
-import TextInput from '@/components/TextInput';
-import Button from '@/components/Button';
-import { useTheme } from '@react-navigation/native';
-import { ScrollView } from 'react-native';
-import RadioButton from '@/components/RadioButton';
+import Button from '@/components/Button'
+import RadioButton from '@/components/RadioButton'
+import TextInput from '@/components/TextInput'
+import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
+import { useToast } from '@/hooks/useToast'
+import Api from '@/service/Api'
+import { useTheme } from '@react-navigation/native'
+import { useEffect, useState } from 'react'
+import { ScrollView } from 'react-native'
 
 export default function TabTwoScreen() {
-  const { colors } = useTheme()
+  const { dark, colors } = useTheme()
+  const toast = useToast()
 
   const [txtSuggestion, setTxtSuggestion] = useState('')
   const [txtIdentification, setTxtIdentification] = useState('')
-  const [types, setTypes] = useState([false, false, false])
+  const [types, setTypes] = useState('Outros')
+  const [error, setError] = useState<string | undefined>()
 
-  const postSuggestion = () => { }
+  const handleRadioSelect = (type: string) => {
+    const MAP_TYPES: Record<string, string> = {
+      Outros: 'others',
+      Aplicativo: 'app',
+      RU: 'ru',
+    }
 
-  const handleCheckBox = (_type: 'RU' | 'APP' | 'OTHERS') => {
-    if (_type === 'RU') setTypes([])
+    setTypes(MAP_TYPES[type])
+  }
+
+  useEffect(() => setError(undefined), [txtSuggestion])
+
+  const postSuggestion = async () => {
+    if (txtSuggestion.trim().length < 10) {
+      setError(
+        'Caracteres insuficientes. A sua sugestão precisa ter, no mínimo, 10 caractéres'
+      )
+      return null
+    }
+
+    const resolve = await Api.post('/suggestion', {
+      text: txtSuggestion,
+      type: types,
+      author: txtIdentification,
+    })
+    if (resolve.status >= 200 && resolve.status < 300) {
+      toast({
+        type: 'SUCCESS',
+        message: 'Sua sugestão foi recebida, Obrigado <3',
+      })
+    } else {
+      toast({
+        type: 'FAIL',
+        message: 'Houve um erro inesperado, tente novamente mais tarde',
+      })
+    }
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 20, justifyContent: 'center' }}>
-      <ThemedView style={{ backgroundColor: colors.card, borderRadius: 10, padding: 30, elevation: 5 }}>
-        <ThemedView style={{ minHeight: '45%', justifyContent: 'space-around', backgroundColor: 'transparent' }}>
+    <ScrollView
+      contentContainerStyle={{
+        flexGrow: 1,
+        padding: 20,
+        justifyContent: 'center',
+      }}
+    >
+      <ThemedView
+        style={{
+          backgroundColor: colors.card,
+          borderRadius: 10,
+          padding: 30,
+          elevation: 5,
+        }}
+      >
+        <ThemedView
+          style={{
+            minHeight: '45%',
+            justifyContent: 'space-around',
+            backgroundColor: 'transparent',
+          }}
+        >
+          {error && (
+            <ThemedText
+              style={{
+                paddingBottom: 20,
+                textAlign: 'center',
+                color: colors.notification,
+              }}
+            >
+              {error}
+            </ThemedText>
+          )}
           <ThemedText style={{ fontSize: 16 }}>
-            Escolha o tipo de sugestão <ThemedText style={{ color: colors.notification }}>*</ThemedText>
+            Escolha o tipo de sugestão
+            <ThemedText style={{ color: colors.notification }}> *</ThemedText>
           </ThemedText>
-          <RadioButton style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 20, marginBottom: 10 }} onSelect={() => { }} options={['RU', 'Aplicativo', 'Outros']} />
+          <RadioButton
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              marginVertical: 20,
+              marginBottom: 10,
+            }}
+            onSelect={handleRadioSelect}
+            initialValue="Outros"
+            options={['RU', 'Aplicativo', 'Outros']}
+          />
           <TextInput
-            label='Identificação'
+            label="Identificação"
             placeholder="Fulano Silva - Curso"
             onChangeText={setTxtIdentification}
             value={txtIdentification}
           />
           <TextInput
-            label='Sugestão'
+            label="Sugestão"
             needed
             placeholder="Mínimo de 10 caractéres"
             onChangeText={setTxtSuggestion}
@@ -48,7 +120,8 @@ export default function TabTwoScreen() {
             multiline
           />
           <ThemedText style={{ textAlign: 'center' }}>
-            <ThemedText style={{ color: colors.notification }}>*</ThemedText> - Campo obrigatório{' '}
+            <ThemedText style={{ color: colors.notification }}>*</ThemedText> -
+            Campo obrigatório
           </ThemedText>
         </ThemedView>
         <ThemedView style={{ backgroundColor: 'transparent' }}>
@@ -61,8 +134,8 @@ export default function TabTwoScreen() {
                 fontWeight: '800',
                 textAlign: 'center',
                 padding: 7,
-                color: colors.text_contrast,
-                borderRadius: 7
+                color: dark ? '#2b2b2b6' : '#f0f0f0',
+                borderRadius: 7,
               }}
             >
               ENVIAR
@@ -70,6 +143,6 @@ export default function TabTwoScreen() {
           </Button>
         </ThemedView>
       </ThemedView>
-    </ScrollView >
-  );
+    </ScrollView>
+  )
 }

@@ -9,7 +9,6 @@ export const Themes = {
       primary: '#1b2d4f',
       background: 'rgb(240, 240, 240)',
       unselect: 'rgb(240, 240, 240)',
-      text_contrast: 'rgb(240, 240, 240)'
     }
   },
   dark: {
@@ -20,7 +19,6 @@ export const Themes = {
       background: chroma(DarkTheme.colors.background).brighten(0.85).hex(),
       card: chroma(DarkTheme.colors.background).brighten(0.45).hex(),
       unselect: chroma(DarkTheme.colors.background).brighten(0.85).hex(),
-      text_contrast: 'rgb(43, 43, 43)'
     }
   },
 }
