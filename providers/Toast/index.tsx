@@ -4,6 +4,7 @@ import { ViewProps } from "react-native"
 import ToastContext from "@/contexts/ToastContext"
 
 export default function ToastProvider({ children }: ViewProps) {
+  const [type, setType] = useState<'INFO' | 'SUCCESS' | 'FAIL' | 'WARNING'>('INFO')
   const [title, setTitle] = useState('')
   const [visible, setVisible] = useState(false)
   const [duration, setDuration] = useState(2500)
@@ -15,7 +16,9 @@ export default function ToastProvider({ children }: ViewProps) {
       visible,
       setVisible,
       duration,
-      setDuration
+      setDuration,
+      type,
+      setType
     }}>
       {children}
     </ToastContext.Provider>

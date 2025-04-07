@@ -15,7 +15,7 @@ export default function TabTwoScreen() {
 
   const [txtSuggestion, setTxtSuggestion] = useState('')
   const [txtIdentification, setTxtIdentification] = useState('')
-  const [types, setTypes] = useState('Outros')
+  const [types, setTypes] = useState('others')
   const [error, setError] = useState<string | undefined>()
 
   const clearTextInputs = () => {
@@ -44,22 +44,33 @@ export default function TabTwoScreen() {
       return null
     }
 
-    const resolve = await Api.post('/suggestion', {
-      text: txtSuggestion,
-      type: types,
-      author: txtIdentification,
-    })
-    if (resolve.status >= 200 && resolve.status < 300) {
-      toast({
-        type: 'SUCCESS',
-        message: 'Sua sugestão foi recebida, Obrigado <3',
+    try {
+      const resolve = await Api.post('/suggestion', {
+        text: txtSuggestion,
+        type: types,
+        author: txtIdentification,
       })
 
-      clearTextInputs()
-    } else {
+      if (resolve.status >= 200 && resolve.status < 300) {
+        toast({
+          type: 'SUCCESS',
+          message: 'Sua sugestão foi recebida, Obrigado <3',
+          duration: 5000
+        })
+
+        clearTextInputs()
+      } else {
+        toast({
+          type: 'FAIL',
+          message: 'Houve um erro inesperado, tente novamente mais tarde',
+          duration: 10000
+        })
+      }
+    } catch {
       toast({
         type: 'FAIL',
         message: 'Houve um erro inesperado, tente novamente mais tarde',
+        duration: 10000
       })
     }
   }

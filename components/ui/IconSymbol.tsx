@@ -22,6 +22,9 @@ const MAPPING = {
   'arrow.counterclockwise': 'refresh',
   'trash': 'remove-circle-outline',
   'checkmark.circle': 'check-circle-outline',
+  'info.circle': 'info-outline',
+  'xmark.circle': 'error-outline',
+  'exclamationmark.triangle': 'warning',
   'multiply': 'close'
 } as Partial<
   Record<

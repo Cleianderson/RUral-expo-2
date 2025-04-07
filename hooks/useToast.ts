@@ -1,20 +1,21 @@
 import { useContext } from "react";
 
-import ToastContext from "@/contexts/ToastContext";
+import ToastContext, { ToastType } from "@/contexts/ToastContext";
 
-type Arg = { type: 'SUCCESS' | 'FAIL', message: string, duration?: number }
+type Arg = { type: ToastType, message: string, duration?: number }
 
 export function useToast() {
-  const { setTitle, setVisible, duration, setDuration } = useContext(ToastContext)
+  const { setTitle, setVisible, duration, setDuration, setType } = useContext(ToastContext)
 
   return function (arg: Arg) {
-    setVisible(true)
+    setType(arg.type)
     setTitle(arg.message)
 
     if (typeof arg.duration === 'number') {
       setDuration(arg.duration)
     }
 
+    setVisible(true)
     setTimeout(() => setVisible(false), duration)
   }
 
