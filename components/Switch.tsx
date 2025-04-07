@@ -37,7 +37,7 @@ const SwitchLabeled: React.FC<Props> = ({
           backgroundColor: 'transparent',
           borderRadius: 0,
           paddingHorizontal: 20,
-          paddingVertical: 5
+          paddingVertical: 10
         }}
       >
         <ThemedText style={{ flex: 1, fontSize: 16 }} disabled={disabled}>{label}</ThemedText>
