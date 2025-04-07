@@ -18,6 +18,12 @@ export default function TabTwoScreen() {
   const [types, setTypes] = useState('Outros')
   const [error, setError] = useState<string | undefined>()
 
+  const clearTextInputs = () => {
+    setTxtIdentification('')
+    setTxtSuggestion('')
+    setError('')
+  }
+
   const handleRadioSelect = (type: string) => {
     const MAP_TYPES: Record<string, string> = {
       Outros: 'others',
@@ -48,6 +54,8 @@ export default function TabTwoScreen() {
         type: 'SUCCESS',
         message: 'Sua sugestão foi recebida, Obrigado <3',
       })
+
+      clearTextInputs()
     } else {
       toast({
         type: 'FAIL',
@@ -74,7 +82,7 @@ export default function TabTwoScreen() {
       >
         <ThemedView
           style={{
-            minHeight: '45%',
+            // minHeight: '45%',
             justifyContent: 'space-around',
             backgroundColor: 'transparent',
           }}
