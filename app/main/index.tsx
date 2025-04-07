@@ -11,6 +11,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { Sagas } from '@/constants/Sagas';
+import Svg, { Circle, G, Path, Rect } from 'react-native-svg';
 
 type FlatViewableChanged = (info: {
   viewableItems: Array<ViewToken>
@@ -47,6 +48,7 @@ export default function HomeScreen() {
   const week = useSelector<RootState, Week | undefined>((state) => state.mainState.week)
   const day = useSelector<RootState, number | undefined>((state) => state.mainState.day)
   const favorites = useSelector<RootState, string[] | undefined>((state) => state.mainState.favorites)
+  const s = useSelector<RootState, any>(state => state.mainState.isRequesting)
   const { showIndicator, showDateOnIndicator } = useSelector<RootState, Configurations>((state) => state.mainState.configurations)
 
 
@@ -135,7 +137,7 @@ export default function HomeScreen() {
 
   return (
     <ThemedView style={{ flex: 1 }}>
-      <ThemedView style={{ flexDirection: 'row', minHeight: showIndicator ? 50 : null }}>
+      {(week?.data?.length ?? 0) > 0 && <ThemedView style={{ flexDirection: 'row', minHeight: showIndicator ? 50 : null }}>
         {(day !== undefined && day >= 0 && showIndicator) && STRING_DAYS.map((strDay, index) => (
           <View style={{ justifyContent: 'center', flex: 1, backgroundColor: theme.colors.card }} key={index} >
             <Button
@@ -160,7 +162,7 @@ export default function HomeScreen() {
             </Button>
           </View>
         ))}
-      </ThemedView>
+      </ThemedView>}
       <FlatList
         data={week?.data}
         ref={(flatList) => (PageFoods.current = flatList)}
@@ -172,6 +174,149 @@ export default function HomeScreen() {
         initialScrollIndex={day}
         viewabilityConfig={{
           itemVisiblePercentThreshold: 100,
+        }}
+        ListEmptyComponent={() => {
+          return (
+            <View style={{ flex: 1, width, justifyContent: "center", alignItems: "center" }}>
+              <ThemedView style={{ alignItems: 'center' }}>
+                <Svg
+                  // xmlns="http://www.w3.org/2000/svg"
+                  width={200}
+                  height={200}
+                  viewBox="0 0 135.467 135.467"
+                >
+                  <G transform="translate(0 -161.533)">
+                    <Path
+                      fill="#b8c4f0"
+                      d="M43.97 191.624a3.208 3.208 0 0 0-3.872 2.385l-15.74 66.229a3.208 3.208 0 0 0 2.385 3.871l50.923 12.103a3.208 3.208 0 0 0 3.872-2.385l15.74-66.229a3.208 3.208 0 0 0-2.386-3.872z"
+                    />
+                    <Path
+                      fill="#4c5a80"
+                      d="M24.142 188.811a3.208 3.208 0 0 0-2.788 3.593l8.522 67.538a3.208 3.208 0 0 0 3.593 2.787l51.929-6.552a3.208 3.208 0 0 0 2.787-3.593l-8.521-67.537a3.208 3.208 0 0 0-3.593-2.788z"
+                    />
+                    <Rect
+                      width={21.015}
+                      height={3.299}
+                      x={1.863}
+                      y={235.329}
+                      fill="#9a9a9a"
+                      ry={1.65}
+                      transform="rotate(-7.191)"
+                    />
+                    <Rect
+                      width={21.015}
+                      height={3.299}
+                      x={1.863}
+                      y={210.827}
+                      fill="#9a9a9a"
+                      ry={1.65}
+                      transform="rotate(-7.191)"
+                    />
+                    <Rect
+                      width={21.015}
+                      height={3.299}
+                      x={1.863}
+                      y={218.994}
+                      fill="#9a9a9a"
+                      ry={1.65}
+                      transform="rotate(-7.191)"
+                    />
+                    <Rect
+                      width={21.015}
+                      height={3.299}
+                      x={1.863}
+                      y={243.497}
+                      fill="#9a9a9a"
+                      ry={1.65}
+                      transform="rotate(-7.191)"
+                    />
+                    <Rect
+                      width={21.015}
+                      height={3.299}
+                      x={1.863}
+                      y={251.664}
+                      fill="#9a9a9a"
+                      ry={1.65}
+                      transform="rotate(-7.191)"
+                    />
+                    <Rect
+                      width={21.015}
+                      height={3.299}
+                      x={1.863}
+                      y={227.162}
+                      fill="#9a9a9a"
+                      ry={1.65}
+                      transform="rotate(-7.191)"
+                    />
+                    <Rect
+                      width={21.015}
+                      height={3.299}
+                      x={30.094}
+                      y={235.329}
+                      fill="#9a9a9a"
+                      ry={1.65}
+                      transform="rotate(-7.191)"
+                    />
+                    <Rect
+                      width={21.015}
+                      height={3.299}
+                      x={30.094}
+                      y={210.827}
+                      fill="#9a9a9a"
+                      ry={1.65}
+                      transform="rotate(-7.191)"
+                    />
+                    <Rect
+                      width={21.015}
+                      height={3.299}
+                      x={30.094}
+                      y={218.994}
+                      fill="#9a9a9a"
+                      ry={0.65}
+                      transform="rotate(-7.191)"
+                    />
+                    <Rect
+                      width={21.015}
+                      height={3.299}
+                      x={30.094}
+                      y={243.497}
+                      fill="#9a9a9a"
+                      ry={1.65}
+                      transform="rotate(-7.191)"
+                    />
+                    <Rect
+                      width={21.015}
+                      height={3.299}
+                      x={30.094}
+                      y={251.664}
+                      fill="#9a9a9a"
+                      ry={1.65}
+                      transform="rotate(-7.191)"
+                    />
+                    <Rect
+                      width={21.015}
+                      height={3.299}
+                      x={30.094}
+                      y={227.162}
+                      fill="#9a9a9a"
+                      ry={1.65}
+                      transform="rotate(-7.191)"
+                    />
+                    <Circle cx={77.582} cy={226.562} r={23.974} fill="#b7d6dfc5" />
+                    <Path
+                      fill="#6387ca"
+                      d="M77.513 200.423a26.002 26.002 0 0 0-26.002 26.002 26.002 26.002 0 0 0 26.002 26.001 26.002 26.002 0 0 0 26.001-26.001 26.002 26.002 0 0 0-26.001-26.002zm0 5.62a20.381 20.381 0 0 1 20.38 20.382 20.381 20.381 0 0 1-20.38 20.38 20.381 20.381 0 0 1-20.382-20.38 20.381 20.381 0 0 1 20.382-20.381z"
+                    />
+                    <Path
+                      fill="#6387ca"
+                      d="M89.095 246.593s10.044 23.083 20.505 23.878c1.98.15 4.367-1.9 4.517-3.879.767-10.09-19.778-23.03-19.778-23.03z"
+                    />
+                  </G>
+                </Svg>
+                <ThemedText style={{ fontSize: 16 }}>Cardápio não encontrado.</ThemedText>
+              </ThemedView>
+            </View>
+          )
         }}
         renderItem={({ item }) => (
           <ThemedView style={{ flex: 1, width, height, backgroundColor: theme.colors.card }}>
@@ -232,14 +377,14 @@ export default function HomeScreen() {
           </ThemedView>
         )}
       />
-      <ThemedView style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 5, backgroundColor: theme.colors.card }}>
+      {(week?.data?.length ?? 0) > 0 && <ThemedView style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 5, backgroundColor: theme.colors.card }}>
         <Button onPress={() => setIsAlmoco(true)} style={isAlmoco ? { ...styles.navBtn, backgroundColor: theme.colors.card, borderColor: theme.colors.primary, borderWidth: 1, borderTopWidth: 0, elevation: 1 } : { ...styles.disabledNavBtn, borderTopWidth: 1, borderColor: theme.colors.primary, backgroundColor: theme.colors.unselect }}>
           <ThemedText style={[{ paddingHorizontal: 10 }, isAlmoco ? { borderBottomColor: theme.colors.primary, borderBottomWidth: 1 } : {}]}>Almoço</ThemedText>
         </Button>
         <Button onPress={() => setIsAlmoco(false)} style={!isAlmoco ? { ...styles.navBtn, backgroundColor: theme.colors.card, borderColor: theme.colors.primary, borderWidth: 1, borderTopWidth: 0, elevation: 1 } : { ...styles.disabledNavBtn, borderTopWidth: 1, borderColor: theme.colors.primary, backgroundColor: theme.colors.unselect }}>
           <ThemedText style={[{ paddingHorizontal: 10 }, !isAlmoco ? { borderBottomColor: theme.colors.primary, borderBottomWidth: 1 } : {}]}>Janta </ThemedText>
         </Button>
-      </ThemedView>
+      </ThemedView>}
     </ThemedView >
   );
 }
