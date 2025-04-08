@@ -45,12 +45,11 @@ export default function TabTwoScreen() {
     }
 
     try {
-      const resolve = { status: 200 }
-      // const resolve = await Api.post('/suggestion', {
-      //   text: txtSuggestion,
-      //   type: types,
-      //   author: txtIdentification,
-      // })
+      const resolve = await Api.post('/suggestion', {
+        text: txtSuggestion,
+        type: types,
+        author: txtIdentification,
+      })
 
       if (resolve.status >= 200 && resolve.status < 300) {
         toast({
