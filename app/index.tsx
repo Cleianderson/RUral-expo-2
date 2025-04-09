@@ -26,6 +26,7 @@ export default function RootApp() {
     dispatch(Sagas.getFavorites())
     dispatch(Sagas.getWeek())
     dispatch(Sagas.getWarnings())
+    dispatch(Sagas.getConfigurations())
 
     setIsAppReady(true)
   }, [])

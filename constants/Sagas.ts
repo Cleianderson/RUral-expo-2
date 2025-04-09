@@ -12,5 +12,6 @@ export const Sagas = {
   setDay: (data: number) => ({ type: DispatchType.setDay, payload: { value: data, data } }),
   getWarnings: () => ({ type: DispatchType.getWarnings }),
   setThereIsWarning: (data: boolean) => ({ type: DispatchType.setThereIsWarning, payload: { value: data, thereIsWarn: data } }),
-  updateConfigurations: (data: object) => ({ type: DispatchType.updateConfigurations, payload: { value: data, data } })
+  updateConfigurations: (data: object) => ({ type: DispatchType.updateConfigurations, payload: { value: data, data } }),
+  getConfigurations: () => ({ type: DispatchType.getConfigurations })
 };
