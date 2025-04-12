@@ -5,6 +5,6 @@ export type ButtonProps = TouchableOpacityProps
 
 export default function Button(props: ButtonProps) {
   return (
-    <TouchableOpacity hitSlop={20} {...props} />
+    <TouchableOpacity hitSlop={10} {...props} />
   )
 }
