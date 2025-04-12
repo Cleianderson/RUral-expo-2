@@ -4,6 +4,7 @@ import Animated, {
   withSpring,
   useSharedValue,
   useAnimatedStyle,
+  withDelay,
 } from 'react-native-reanimated'
 
 import ToastContext, { ToastType } from '@/contexts/ToastContext'
@@ -29,7 +30,7 @@ const TYPE_MAP_COLOR: Map<'INFO' | 'SUCCESS' | 'FAIL' | 'WARNING', string> =
 export default function Toast() {
   const { width } = useWindowDimensions()
   const { title, type, visible, setVisible } = useContext(ToastContext)
-  const opacity = useSharedValue(0)
+  const display = useSharedValue<'flex' | 'none'>('none')
 
   const [icon, setIcon] = useState<SFSymbol>('info.circle')
   const [color, setColor] = useState('#2e6f40')
@@ -46,8 +47,17 @@ export default function Toast() {
     top: 30,
     width,
     minHeight: 70,
-    opacity: withSpring(visible ? 1 : 0)
-  }), [width, visible])
+    opacity: withSpring(visible ? 1 : 0),
+    display: display.value
+  }), [width, visible, display])
+
+  useEffect(() => {
+    if (visible) {
+      display.value = 'flex'
+    } else {
+      setTimeout(() => display.value = 'none', 1000)
+    }
+  }, [visible])
 
   return (
     <Animated.View style={animatedStyle}>
