@@ -22,6 +22,7 @@ const initialState: MainState = {
   },
   favorites: [],
   isOnboarded: undefined,
+  isAppReady: false,
   menu: [],
   week: undefined,
   newWarning: undefined,
@@ -85,6 +86,10 @@ export const mainReducer: Reduce = (state = initialState, action) => {
 
   const SET_IS_ONBOARDED: Reduce = (state, action) => {
     return state
+
+  }
+  const SET_IS_APP_READY: Reduce = (state, action) => {
+    return { ...state, isAppReady: action.payload.value }
   }
 
   const SET_MENU: Reduce = (state, action) => {
@@ -116,6 +121,7 @@ export const mainReducer: Reduce = (state = initialState, action) => {
     SET_CONFIGURATIONS,
     SET_FAVORITES,
     SET_IS_ONBOARDED,
+    SET_IS_APP_READY,
     SET_MENU,
     SET_NEW_WARNING,
     SET_QUESTIONS,

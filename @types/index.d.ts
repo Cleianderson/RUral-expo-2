@@ -38,6 +38,7 @@ declare type MainState = {
   configurations: Configurations,
   favorites: string[],
   isOnboarded: boolean | undefined,
+  isAppReady: boolean,
   menu: [],
   newWarning: boolean | undefined,
   questions: [],

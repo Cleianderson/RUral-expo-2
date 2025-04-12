@@ -13,6 +13,7 @@ export enum DispatchType {
   setNewWarning = "SET_NEW_WARNING",
   setWarnings = "SET_WARNINGS",
   setIsRequesting = "SET_IS_REQUESTING",
+  setIsAppReady = "SET_IS_APP_READY",
   setTextFailed = "SET_TEXT_FAILED",
   setSuccess = "SET_SUCCESS",
   updateWeek = "UPDATE_WEEK",

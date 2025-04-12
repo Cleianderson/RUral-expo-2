@@ -1,9 +1,10 @@
 import { Redirect } from 'expo-router'
-import { useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useCallback, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import * as SplashsScreen from 'expo-splash-screen'
 
-import { Sagas } from '@/constants/Sagas'
+import { ThemedView } from '@/components/ThemedView'
+import { ThemedText } from '@/components/ThemedText'
 
 SplashsScreen.preventAutoHideAsync()
 SplashsScreen.setOptions({
@@ -12,24 +13,7 @@ SplashsScreen.setOptions({
 })
 
 export default function RootApp() {
-  const [isOnboarded, setIsOnboarded] = useState(true)
-  const [isAppReady, setIsAppReady] = useState(false)
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    let _day = new Date(Date.now()).getDay() - 1
-    _day = _day > 4 || _day < 0 ? 0 : _day
-    dispatch(Sagas.setDay(_day))
-
-    // initalizeOneSignal()
-    dispatch(Sagas.getFavorites())
-    dispatch(Sagas.getWeek())
-    dispatch(Sagas.getWarnings())
-    dispatch(Sagas.getConfigurations())
-
-    setIsAppReady(true)
-  }, [])
+  const { isOnboarded, isAppReady } = useSelector<RootState, MainState>(state => state.mainState)
 
   useEffect(() => {
     if (isAppReady) {
@@ -40,9 +24,16 @@ export default function RootApp() {
   const _app = useCallback(() => {
     if (isAppReady === false) return null
 
-    if (isOnboarded) {
+    // While Onboarding page don't exist
+    if (isOnboarded === undefined) {
       return <Redirect href="/main" />
     }
+
+    return (
+      <ThemedView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ThemedText>Build Onboarding page</ThemedText>
+      </ThemedView>
+    )
   }, [isOnboarded, isAppReady])
 
   return _app()
