@@ -62,7 +62,7 @@ function* requestWeek() {
   })
   const { data: week, status }: AxiosResponse<Week> = yield call(
     Api.get,
-    `/thisweek?week=${11}`// `/thisweek?week=${weekOfTomorrow}`
+    `/thisweek?week=${weekOfTomorrow}`
   )
 
   if (week?.data.length > 0 && status.toString().startsWith("2")) {
@@ -89,8 +89,8 @@ function* requestWeek() {
   }
 
   yield put({
-    type: DispatchType.setIsRequesting,
-    payload: { value: false },
+    type: DispatchType.setIsAppReady,
+    payload: { value: true },
   })
 }
 
