@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@react-navigation/native'
 import { Stack } from 'expo-router'
-import { Provider, useDispatch } from 'react-redux'
+import { Provider, useDispatch, useSelector } from 'react-redux'
 
 import { Themes } from '@/constants/Theme'
 import { useColorScheme } from '@/hooks/useColorScheme'
@@ -10,15 +10,22 @@ import ToastProvider from '@/providers/Toast'
 import { StatusBar, StatusBarProps } from 'react-native'
 import { useEffect, useState } from 'react'
 import { Sagas } from '@/constants/Sagas'
+import * as SplashsScreen from 'expo-splash-screen'
 
 // import Requesting from "@/components/Requesting"
 // import Config from "@/providers/Config"
+SplashsScreen.preventAutoHideAsync()
+SplashsScreen.setOptions({
+  duration: 1000,
+  fade: true,
+})
 
 function ThemeContainer() {
   const colorScheme = useColorScheme()
   const dispatch = useDispatch()
 
   const [statusBarProps, setStatusBarProps] = useState<StatusBarProps | null>(null)
+  const { isAppReady } = useSelector<RootState, MainState>(state => state.mainState)
 
   useEffect(() => {
     setStatusBarProps({
@@ -26,6 +33,12 @@ function ThemeContainer() {
       backgroundColor: colorScheme === 'dark' ? '#232323' : '#f0f0f0'
     })
   }, [colorScheme])
+
+  useEffect(() => {
+    if (isAppReady) {
+      SplashsScreen.hide()
+    }
+  }, [isAppReady])
 
   useEffect(() => {
     let _day = new Date(Date.now()).getDay() - 1
