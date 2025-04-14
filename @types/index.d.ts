@@ -69,4 +69,5 @@ interface Configurations {
   showIndicator: boolean
   showDateOnIndicator: boolean
   darkTheme: boolean
+  colorScheme: 'light' | 'dark' | null
 }

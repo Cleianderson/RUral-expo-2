@@ -8,9 +8,9 @@ import chroma from 'chroma-js'
 
 type Props = ButtonProps & {
   label: string
-  isActived: boolean
+  isActived?: boolean
   nested?: boolean
-  onPress: () => void
+  onPress: (value?: string) => void
   disabled?: boolean
 }
 
@@ -45,7 +45,7 @@ const SwitchLabeled: React.FC<Props> = ({
           style={{ marginLeft: 20 }}
           disabled={disabled}
           value={isActived}
-          onValueChange={onPress}
+          onValueChange={() => onPress()}
           thumbColor={disabled ? undefined : colors.primary}
           trackColor={{
             true: disabled ? chroma(colors.text).tint(0.25).hex() : chroma(colors.primary).brighten(2.5).hex(),

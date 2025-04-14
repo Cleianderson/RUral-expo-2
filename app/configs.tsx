@@ -10,7 +10,23 @@ import { ThemedText } from '@/components/ThemedText'
 import { useTheme } from '@react-navigation/native'
 import { Sagas } from '@/constants/Sagas'
 import { useDispatch, useSelector } from 'react-redux'
+import Picker from '@/components/Picker'
 // import Config from '~/contexts/ConfigContext'
+
+type ConfigData = {
+  type: 'picker' | 'switch'
+  pickerOptions?: { label: string, value: string }[]
+  label: string
+  selectedValue?: string
+  nested?: boolean
+  disabled?: boolean
+  isActived?: boolean
+  onPress: (value?: string | number, index?: number) => void
+}
+type ConfigProps = {
+  title: string
+  data: ConfigData[]
+}
 
 export default function Configuration() {
   const { colors } = useTheme()
@@ -19,11 +35,11 @@ export default function Configuration() {
   const configs = useSelector<RootState, Configurations>(
     (state) => state.mainState.configurations
   )
-  const { showIndicator, showDateOnIndicator, darkTheme } = configs
+  const { showIndicator, showDateOnIndicator, colorScheme } = configs
 
   const updateConfig = (data: any) => dispatch(Sagas.updateConfigurations(data))
 
-  const CONFIGS = [
+  const CONFIGS: ConfigProps[] = [
     {
       title: 'Indicador do dia',
       data: [
@@ -48,12 +64,18 @@ export default function Configuration() {
       title: 'Aparência',
       data: [
         {
-          type: 'switch',
-          label: 'Tema escuro',
-          disabled: false,
-          nested: true,
-          isActived: darkTheme,
-          onPress: () => updateConfig({ darkTheme: !darkTheme }),
+          type: 'picker',
+          pickerOptions: [
+            { label: 'Claro', value: 'light' },
+            { label: 'Escuro', value: 'dark' },
+            { label: 'Padrão do sistema', value: 'null' },
+          ],
+          label: 'Tema',
+          selectedValue: colorScheme as string,
+          onPress: (value, index) => {
+            const _value = value === 'null' ? null : value
+            updateConfig({ colorScheme: _value })
+          },
         },
       ],
     },
@@ -89,7 +111,12 @@ export default function Configuration() {
                 index === section.data.length - 1 ? 7 : 0,
             }}
           >
-            <SwitchLabeled {...item} />
+            {item.type === 'switch' && (
+              <SwitchLabeled {...item} onPress={() => item.onPress()} />
+            )}
+            {item.type === 'picker' && (
+              <Picker onValueChange={item.onPress} {...item} />
+            )}
           </View>
         )}
       />

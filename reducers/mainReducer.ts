@@ -19,6 +19,7 @@ const initialState: MainState = {
     showIndicator: true,
     showDateOnIndicator: true,
     darkTheme: true,
+    colorScheme: null
   },
   favorites: [],
   isOnboarded: undefined,
@@ -89,6 +90,7 @@ export const mainReducer: Reduce = (state = initialState, action) => {
 
   }
   const SET_IS_APP_READY: Reduce = (state, action) => {
+    console.info(`Setting isAppReady to ${action.payload.value}`)
     return { ...state, isAppReady: action.payload.value }
   }
 
