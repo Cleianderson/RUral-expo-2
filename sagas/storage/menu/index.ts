@@ -24,6 +24,10 @@ function* getWeek() {
     yield put<StorageAction>({ type: DispatchType.requestWeek })
   } else {
     yield updateWeek(week)
+    yield put({
+      type: DispatchType.setIsAppReady,
+      payload: { value: true },
+    })
   }
 }
 
