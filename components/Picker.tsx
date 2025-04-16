@@ -1,18 +1,17 @@
-import {
-  Picker as RNPicker,
-  PickerProps as RNPickerProps,
-} from '@react-native-picker/picker'
 import { useTheme } from '@react-navigation/native'
-import { useRef } from 'react'
+import { useState } from 'react'
 
-import { ThemedView } from '@/components/ThemedView'
-import { ThemedText } from '@/components/ThemedText'
 import Button from '@/components/Button'
+import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
 import { IconSymbol } from '@/components/ui/IconSymbol'
+import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 
-type PickerProps = RNPickerProps & {
+type PickerProps = {
   label: string
   pickerOptions?: { label: string; value: string }[]
+  selectedValue?: string | number;
+  onValueChange?: (itemValue: string | number, itemIndex: number) => void;
 }
 
 export default function Picker({
@@ -23,10 +22,30 @@ export default function Picker({
   ...props
 }: PickerProps) {
   const { colors } = useTheme()
-  const pickerRef = useRef<RNPicker<string | number>>(null)
+  const [isOptionsVisible, setIsOptionVisible] = useState(false)
+
+  const optionsStyle = useAnimatedStyle(
+    () => ({
+      position: 'absolute',
+      padding: 8,
+      backgroundColor: colors.card,
+      borderWidth: 2,
+      borderColor: colors.border,
+      borderRadius: 6,
+      right: 10,
+      opacity: withTiming(isOptionsVisible ? 1 : 0),
+      display: isOptionsVisible ? 'flex' : 'none',
+    }),
+    [isOptionsVisible, colors]
+  )
 
   const handleValueChange = (itemValue: string | number, index: number) => {
     onValueChange?.(itemValue, index)
+    setIsOptionVisible(!isOptionsVisible)
+  }
+
+  const handleOpenOptions = () => {
+    setIsOptionVisible(!isOptionsVisible)
   }
 
   const selectedLabel = pickerOptions.find(
@@ -43,32 +62,45 @@ export default function Picker({
         paddingHorizontal: 20,
         paddingVertical: 10,
       }}
-      onPress={() => pickerRef.current?.focus()}
+      onPress={handleOpenOptions}
     >
-      <ThemedView style={{ flex: 1, backgroundColor: 'transparent' }}>
-        <ThemedText style={{ fontSize: 16 }}>{label}</ThemedText>
-        <ThemedText style={{ fontSize: 12 }}>{selectedLabel}</ThemedText>
-      </ThemedView>
-      <IconSymbol name="chevron.right" size={24} color={colors.primary} />
-      <RNPicker
-        ref={pickerRef}
-        style={{ width: 0 }}
-        dropdownIconColor={colors.card}
-        prompt={label}
-        onValueChange={handleValueChange}
-        mode="dropdown"
-        {...props}
+      <ThemedView
+        style={{
+          flex: 1,
+          backgroundColor: 'transparent',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
       >
-        {pickerOptions.map(({ label, value }) => (
-          <RNPicker.Item
+        <ThemedText style={{ flex: 1, fontSize: 16 }}>{label}</ThemedText>
+        <ThemedView
+          style={{
+            backgroundColor: colors.background,
+            flexDirection: 'row',
+            paddingHorizontal: 15,
+            paddingVertical: 5,
+            paddingRight: 3,
+            borderRadius: 8,
+          }}
+        >
+          <ThemedText style={{ marginRight: 10 }}>{selectedLabel}</ThemedText>
+          <IconSymbol name="chevron.right" size={24} color={colors.primary} />
+        </ThemedView>
+      </ThemedView>
+      <Animated.View style={optionsStyle}>
+        {pickerOptions.map(({ label, value }, index) => (
+          <Button
             key={value}
-            label={label}
-            value={value}
-            color={colors.text}
-            style={{ backgroundColor: colors.card }}
-          />
+            style={{
+              backgroundColor: colors.card,
+              paddingVertical: 8,
+            }}
+            onPress={() => handleValueChange(value, index)}
+          >
+            <ThemedText>{label}</ThemedText>
+          </Button>
         ))}
-      </RNPicker>
+      </Animated.View>
     </Button>
   )
 }
