@@ -28,7 +28,7 @@ declare type RootState = {
 }
 
 declare type MainState = {
-  warns: [],
+  warns: WarningType[],
   foods: Table[] | undefined,
   week: Week | undefined,
   day: number | undefined,
@@ -70,4 +70,11 @@ interface Configurations {
   showDateOnIndicator: boolean
   darkTheme: boolean
   colorScheme: 'light' | 'dark' | null
+}
+
+declare type WarningType = {
+  _id: string,
+  title: string,
+  content: string,
+  endDate: Date | string
 }

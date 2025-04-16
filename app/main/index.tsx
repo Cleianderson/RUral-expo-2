@@ -121,9 +121,9 @@ export default function HomeScreen() {
             justifyContent: "space-around",
           }}
         >
-          <Button onPress={() => router.push("/warnings")}>
+          {/* <Button onPress={() => router.push("/warnings")}>
             <IconSymbol name="bell.fill" color={color} />
-          </Button>
+          </Button> */}
           <Button onPress={() => { }}>
             <IconSymbol name="arrow.counterclockwise" color={color} />
           </Button>

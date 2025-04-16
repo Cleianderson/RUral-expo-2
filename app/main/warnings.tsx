@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Svg, { Path } from "react-native-svg"
 import { FlatList } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ThemedView } from '@/components/ThemedView'
 import { ThemedText } from '@/components/ThemedText'
 import { Sagas } from '@/constants/Sagas'
@@ -9,12 +9,12 @@ import { Sagas } from '@/constants/Sagas'
 
 // import { Container, Title, Message, Content, DateText, Header } from './style'
 
-type Warn = { title: '1', createdAt: '26/03/2025', content: 'content' }
+// type Warn = { title: '1', createdAt: '26/03/2025', content: 'content' }
 
 export default function Warn() {
   const dispatch = useDispatch()
-  // const warns = useSelector<RootState, WarningType[] | undefined>(state => state.mainState.warns)
-  const [warns, _] = useState<Warn[]>([])
+  const warns = useSelector<RootState, WarningType[] | undefined>(state => state.mainState.warns)
+  // const [warns, _] = useState<Warn[]>([])
 
   const updateThereIsWarn = async (value: boolean) => {
     // dispatch({ type: 'SET_THERE_IS_WARN', payload: { thereIsWarn: value } })
@@ -36,11 +36,11 @@ export default function Warn() {
     updateThereIsWarn(false)
   }, [])
 
-  const renderItem = ({ item }: { item: Warn }) => (
+  const renderItem = ({ item }: { item: WarningType }) => (
     <ThemedView>
       <ThemedView>
         <ThemedText>{item.title}</ThemedText>
-        <ThemedText>{formatDate(item.createdAt)}</ThemedText>
+        <ThemedText>{formatDate(String(item.endDate))}</ThemedText>
       </ThemedView>
       <ThemedView>
         <ThemedText>{item.content}</ThemedText>
