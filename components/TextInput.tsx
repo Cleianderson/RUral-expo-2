@@ -11,10 +11,10 @@ export default function TextInput({ needed, label, containerStyle, ...props }: P
 
   return (
     <View style={{ borderWidth: 1, borderColor: colors.border, padding: 10, borderRadius: 5, paddingTop: 2, marginVertical: 5, ...containerStyle }}>
-      <ThemedText style={{ color: colors.primary }}>
+      {(label || needed) && <ThemedText style={{ color: colors.primary }}>
         {label}
         {needed && <ThemedText style={{ color: colors.notification }}> *</ThemedText>}
-      </ThemedText>
+      </ThemedText>}
       <_TextInput style={{ fontSize: 16, color: colors.text }} placeholderTextColor={dark ? chroma(colors.text).darken(2.5).hex() : chroma(colors.text).brighten(2.5).hex()} {...props} />
     </View>
   )
