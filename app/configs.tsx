@@ -1,9 +1,8 @@
 // import { useContext } from 'react'
-import { BackHandler, ScrollView, SectionList, View } from 'react-native'
+import { SectionList, View } from 'react-native'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // import SwitchLabeled from './components/SwitchLabeled'
-import Button from '@/components/Button'
 import { ThemedView } from '@/components/ThemedView'
 import SwitchLabeled from '@/components/Switch'
 import { ThemedText } from '@/components/ThemedText'
@@ -120,28 +119,6 @@ export default function Configuration() {
           </View>
         )}
       />
-      <Button
-        onPress={() => {
-          const clear = async () => {
-            // await AsyncStorage.clear()
-            BackHandler.exitApp()
-          }
-          clear()
-        }}
-      >
-        <ThemedText
-          style={{
-            color: '#fff',
-            fontWeight: '600',
-            backgroundColor: colors.notification,
-            padding: 5,
-            textAlign: 'center',
-            borderRadius: 2,
-          }}
-        >
-          LIMPAR DADOS DO APLICATIVO
-        </ThemedText>
-      </Button>
     </ThemedView>
   )
 }
