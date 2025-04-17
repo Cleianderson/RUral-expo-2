@@ -139,7 +139,7 @@ export default function HomeScreen() {
     if (day !== undefined && (week?.data.length ?? 0) > 0) {
       PageFoods.current?.scrollToIndex({ index: day })
     }
-  })
+  }, [])
 
   return (
     <ThemedView style={{ flex: 1 }}>
