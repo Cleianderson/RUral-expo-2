@@ -18,19 +18,19 @@ type FlatViewableChanged = (info: {
   changed: Array<ViewToken>
 }) => void
 
-const menuKeys = {
-  "p1": "Prato Principal 1",
-  "p2": "Prato Principal 2",
-  "gre": "Na Grelha",
-  "fag": "Fast Grill",
-  "veg": "Vegetariano",
-  "gua": "Guarnição",
-  "sal": "Salada Crua",
-  "sco": "Salada Cozida",
-  "sopa": "Sopa",
-  "sob": "Sobremesa",
-  "suc": "Suco"
-}
+const menuMap = new Map([
+  ["p1", "Prato Principal 1"],
+  ["p2", "Prato Principal 2"],
+  ["gre", "Na Grelha"],
+  ["fag", "Fast Grill"],
+  ["veg", "Vegetariano"],
+  ["gua", "Guarnição"],
+  ["sal", "Salada Crua"],
+  ["sco", "Salada Cozida"],
+  ["sopa", "Sopa"],
+  ["sob", "Sobremesa"],
+  ["suc", "Suco"]
+])
 
 
 export default function HomeScreen() {
@@ -327,12 +327,19 @@ export default function HomeScreen() {
         renderItem={({ item }) => (
           <ThemedView style={{ flex: 1, width, height, backgroundColor: theme.colors.card }}>
             <FlatList
-              data={Object.keys(isAlmoco ? item.almoco : item.jantar)} // Use keys as data
+              data={Array.from(menuMap.keys())} // Use keys as data
               keyExtractor={(key) => key} // Ensure unique keys
               contentContainerStyle={{ paddingBottom: 250, flexGrow: 1 }}
               renderItem={({ item: key, index }) => {
                 const menu = isAlmoco ? item.almoco : item.jantar
                 const _itemMenu = menu[key as keyof typeof menu]
+
+                if (isAlmoco && key === 'sopa') {
+                  return null
+                }
+                if (!isAlmoco && key === 'sco') {
+                  return null
+                }
 
                 return (
                   <ThemedView
@@ -366,7 +373,7 @@ export default function HomeScreen() {
                       }}
                     >
                       <ThemedText style={{ fontWeight: '400', marginBottom: 1 }}>
-                        {menuKeys[key as keyof typeof menuKeys]}
+                        {menuMap.get(key)}
                       </ThemedText>
                       <ThemedText style={{ fontWeight: '600' }}>{_itemMenu}</ThemedText>
                     </ThemedView>
