@@ -135,6 +135,12 @@ export default function HomeScreen() {
     })
   }, [navigation, theme, theme.colors])
 
+  useEffect(() => {
+    if (day !== undefined && (week?.data.length ?? 0) > 0) {
+      PageFoods.current?.scrollToIndex({ index: day })
+    }
+  })
+
   return (
     <ThemedView style={{ flex: 1 }}>
       {(week?.data?.length ?? 0) > 0 && <ThemedView style={{ flexDirection: 'row', minHeight: showIndicator ? 50 : null }}>
@@ -171,9 +177,10 @@ export default function HomeScreen() {
         horizontal
         pagingEnabled
         getItemLayout={getItemLayout}
-        initialScrollIndex={day}
+        // initialScrollIndex={day}
         viewabilityConfig={{
           itemVisiblePercentThreshold: 100,
+          waitForInteraction: true,
         }}
         ListEmptyComponent={() => {
           return (
