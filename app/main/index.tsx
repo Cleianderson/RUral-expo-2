@@ -81,17 +81,22 @@ export default function HomeScreen() {
 
   const _favoriteOnPress = (item: string) => {
     if (_checkItem(item)) {
-      const _favorites = favorites?.filter(favorite => (
-        favorite.toUpperCase().trim() === item.toUpperCase().trim()
-      ))
+      const sanitizedItem = item.toUpperCase().trim()
+      const matchingFavorite = favorites?.find(favorite => {
+        const sanitizedFav = favorite.toUpperCase().trim()
+        return (
+          sanitizedFav === sanitizedItem ||
+          sanitizedFav.includes(sanitizedItem) ||
+          sanitizedItem.includes(sanitizedFav)
+        )
+      })
 
-      for (let fav of _favorites ?? []) {
-        delFavorites(fav)
+      if (matchingFavorite) {
+        delFavorites(matchingFavorite)
       }
-      return 0
+    } else {
+      addFavorites(item)
     }
-
-    return addFavorites(item)
   }
 
   function _getDate(inx: number) {
