@@ -82,7 +82,7 @@ export default function HomeScreen() {
   const _favoriteOnPress = (item: string) => {
     if (_checkItem(item)) {
       const _favorites = favorites?.filter(favorite => (
-        favorite.toUpperCase() === item.toUpperCase()
+        favorite.toUpperCase().trim() === item.toUpperCase().trim()
       ))
 
       for (let fav of _favorites ?? []) {
