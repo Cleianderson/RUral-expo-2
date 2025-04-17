@@ -57,7 +57,6 @@ function ThemeContainer() {
       <Stack>
         <Stack.Screen name="main" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
-        <Stack.Screen name="warnings" options={{ title: 'Avisos' }} />
         <Stack.Screen name="configs" options={{ title: 'Configurações' }} />
       </Stack>
       <Toast />
