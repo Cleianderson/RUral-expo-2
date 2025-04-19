@@ -28,31 +28,19 @@ const SwitchLabeled: React.FC<Props> = ({
     <Button
       disabled={disabled}
       onPress={onPress}
-      style={{ borderBottomColor: colors.border, borderBottomWidth: 1 }}
+      style={{ flexDirection: 'row', alignItems: 'center' }}
     >
-      <ThemedView
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          backgroundColor: 'transparent',
-          borderRadius: 0,
-          paddingHorizontal: 20,
-          paddingVertical: 10
+      <ThemedText style={{ flex: 1, fontSize: 16 }} disabled={disabled}>{label}</ThemedText>
+      <Switch
+        disabled={disabled}
+        value={isActived}
+        onValueChange={() => onPress()}
+        thumbColor={disabled ? undefined : colors.primary}
+        trackColor={{
+          true: disabled ? chroma(colors.text).tint(0.25).hex() : chroma(colors.primary).brighten(2.5).hex(),
+          false: '#666',
         }}
-      >
-        <ThemedText style={{ flex: 1, fontSize: 16 }} disabled={disabled}>{label}</ThemedText>
-        <Switch
-          style={{ marginLeft: 20 }}
-          disabled={disabled}
-          value={isActived}
-          onValueChange={() => onPress()}
-          thumbColor={disabled ? undefined : colors.primary}
-          trackColor={{
-            true: disabled ? chroma(colors.text).tint(0.25).hex() : chroma(colors.primary).brighten(2.5).hex(),
-            false: '#666',
-          }}
-        />
-      </ThemedView>
+      />
       {children}
     </Button>
   )

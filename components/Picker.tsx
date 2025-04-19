@@ -32,9 +32,12 @@ export default function Picker({
       borderWidth: 2,
       borderColor: colors.border,
       borderRadius: 6,
-      right: 10,
+      right: 0,
+      bottom: 0,
       opacity: withTiming(isOptionsVisible ? 1 : 0),
       display: isOptionsVisible ? 'flex' : 'none',
+      zIndex: 3,
+      elevation: 3,
     }),
     [isOptionsVisible, colors]
   )
@@ -59,8 +62,6 @@ export default function Picker({
         alignItems: 'center',
         backgroundColor: 'transparent',
         borderRadius: 0,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
       }}
       onPress={handleOpenOptions}
     >
