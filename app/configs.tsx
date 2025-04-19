@@ -93,7 +93,7 @@ export default function Configuration() {
           label: 'Site RUral',
           iconName: 'web',
           info: 'rural.expo.app',
-          urlStr: 'http://www.rural.expo.app'
+          urlStr: 'https://rural.expo.app'
         },
         {
           type: 'social',
