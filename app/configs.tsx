@@ -1,5 +1,5 @@
 // import { useContext } from 'react'
-import { SectionList, View } from 'react-native'
+import { Platform, SectionList, View } from 'react-native'
 import * as Aplication from 'expo-application'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -124,7 +124,7 @@ export default function Configuration() {
         {
           type: 'info',
           label: 'Versão',
-          info: Aplication.nativeApplicationVersion
+          info: Aplication.nativeApplicationVersion ?? Platform.OS
         },
       ],
     },
