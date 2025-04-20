@@ -140,7 +140,7 @@ export default function HomeScreen() {
     })
   }, [navigation, theme, theme.colors])
 
-  if (day === undefined || (week?.data.length ?? -1) === 0) {
+  if (day === undefined || (week?.data === undefined)) {
     return (
       <View style={{ flex: 1, width, justifyContent: "center", alignItems: "center" }}>
         <ThemedView style={{ alignItems: 'center' }}>
