@@ -77,4 +77,6 @@ declare type WarningType = {
   title: string,
   content: string,
   endDate: Date | string
+  createdAt: Date | string
+  updatedAt: Date | string
 }

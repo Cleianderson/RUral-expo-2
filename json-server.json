@@ -143,20 +143,30 @@
     {
       "_id": "67f9240284267b02930ce2d2",
       "title": "Title | 67f9240284267b02930ce2d2",
-      "content": "Content | 67f9240284267b02930ce2d2",
-      "endDate": "2025-05-01T10:00:00.000Z"
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "endDate": "2025-05-01T10:00:00.000Z",
+      "createdAt": "2025-04-01T09:00:00.000Z"
     },
     {
       "_id": "67f9240284267b02930ce2d3",
       "title": "Title | 67f9240284267b02930ce2d3",
-      "content": "Content | 67f9240284267b02930ce2d3",
-      "endDate": "2025-06-15T15:30:00.000Z"
+      "content": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "endDate": "2025-06-15T15:30:00.000Z",
+      "createdAt": "2025-04-05T10:00:00.000Z"
     },
     {
       "_id": "67f9240284267b02930ce2d4",
       "title": "Title | 67f9240284267b02930ce2d4",
-      "content": "Content | 67f9240284267b02930ce2d4",
-      "endDate": "2025-07-20T08:45:00.000Z"
+      "content": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "endDate": "2025-07-20T08:45:00.000Z",
+      "createdAt": "2025-04-10T11:00:00.000Z"
+    },
+    {
+      "_id": "67f9240284267b02930ce2d5",
+      "title": "Advice | Stay Hydrated",
+      "content": "Remember to drink water regularly throughout the day to stay hydrated and maintain your energy levels.",
+      "endDate": "2025-08-01T12:00:00.000Z",
+      "createdAt": "2025-04-15T12:00:00.000Z"
     }
   ]
 }
