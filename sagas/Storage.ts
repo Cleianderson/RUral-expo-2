@@ -4,6 +4,7 @@ import { all, put, takeEvery } from "redux-saga/effects"
 import watchFavorites from "./storage/favorites"
 import watchMenu from "./storage/menu"
 import watchConfigs from "./storage/configs"
+import watchWarnings from "./storage/warnings"
 // import watchWarnings from "./storage/warnings"
 
 function* setAcceptedNotification(action) {
@@ -17,7 +18,7 @@ function* watchAcceptedNotification() {
 }
 
 function* storageSaga() {
-  yield all([watchFavorites(), watchAcceptedNotification(), watchMenu(), watchConfigs()])
+  yield all([watchFavorites(), watchAcceptedNotification(), watchMenu(), watchConfigs(), watchWarnings()])
   // yield all([watchFavorites(), watchAcceptedNotification(), watchWarnings(), watchMenu()])
 }
 

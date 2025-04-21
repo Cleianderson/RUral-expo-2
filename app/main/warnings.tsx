@@ -13,7 +13,7 @@ import { Sagas } from '@/constants/Sagas'
 
 export default function Warn() {
   const dispatch = useDispatch()
-  const warns = useSelector<RootState, WarningType[] | undefined>(state => state.mainState.warns)
+  const warns = useSelector<RootState, WarningType[] | undefined>(state => state.mainState.warnings)
   // const [warns, _] = useState<Warn[]>([])
 
   const updateThereIsWarn = async (value: boolean) => {
@@ -36,17 +36,6 @@ export default function Warn() {
     updateThereIsWarn(false)
   }, [])
 
-  const renderItem = ({ item }: { item: WarningType }) => (
-    <ThemedView>
-      <ThemedView>
-        <ThemedText>{item.title}</ThemedText>
-        <ThemedText>{formatDate(String(item.endDate))}</ThemedText>
-      </ThemedView>
-      <ThemedView>
-        <ThemedText>{item.content}</ThemedText>
-      </ThemedView>
-    </ThemedView>
-  )
 
   return (
     <FlatList
@@ -56,11 +45,20 @@ export default function Warn() {
       contentContainerStyle={{
         justifyContent: 'flex-end',
         flexDirection: 'column-reverse',
-        // margin: 10,
-        // paddingBottom: 20,
+        gap: 15,
         flexGrow: 1
       }}
-      renderItem={renderItem}
+      renderItem={({ item }) => (
+        <ThemedView style={{ paddingVertical: 15, paddingHorizontal: 20, marginHorizontal: 15 }}>
+          <ThemedView style={{ flexDirection: 'row' }}>
+            <ThemedText style={{ flex: 1 }}>{item.title}</ThemedText>
+            <ThemedText>{formatDate(String(item.endDate))}</ThemedText>
+          </ThemedView>
+          <ThemedView>
+            <ThemedText>{item.content}</ThemedText>
+          </ThemedView>
+        </ThemedView>
+      )}
       ListEmptyComponent={
         <ThemedView
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
