@@ -50,6 +50,12 @@
         "projectId": "c9f8eea7-f2bc-4fbd-8c39-47cc753a5881"
       }
     },
-    "owner": "cleianderson"
+    "owner": "cleianderson",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c9f8eea7-f2bc-4fbd-8c39-47cc753a5881"
+    }
   }
 }
