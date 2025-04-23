@@ -123,13 +123,13 @@ export default function HomeScreen() {
           style={{
             flexDirection: "row",
             width: 130,
-            justifyContent: "space-around",
+            justifyContent: "space-evenly",
           }}
         >
           {/* <Button onPress={() => router.push("/warnings")}>
             <IconSymbol name="bell.fill" color={color} />
           </Button> */}
-          <Button onPress={() => { }}>
+          <Button onPress={() => dispatch(Sagas.requestWeek())}>
             <IconSymbol name="arrow.counterclockwise" color={color} />
           </Button>
           <Button onPress={() => router.push("/configs")}>
