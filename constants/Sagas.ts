@@ -13,5 +13,6 @@ export const Sagas = {
   getWarnings: () => ({ type: DispatchType.getWarnings }),
   setThereIsWarning: (data: boolean) => ({ type: DispatchType.setThereIsWarning, payload: { value: data, thereIsWarn: data } }),
   updateConfigurations: (data: object) => ({ type: DispatchType.updateConfigurations, payload: { value: data, data } }),
-  getConfigurations: () => ({ type: DispatchType.getConfigurations })
+  getConfigurations: () => ({ type: DispatchType.getConfigurations }),
+  clearHowManyWarning: () => ({ type: DispatchType.clearHowManyWarning })
 };

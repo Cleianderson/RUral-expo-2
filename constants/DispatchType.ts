@@ -21,5 +21,8 @@ export enum DispatchType {
   setThereIsWarning = "SET_THERE_IS_WARN",
   setConfigurations = "SET_CONFIGURATIONS",
   getConfigurations = "GET_CONFIGURATIONS",
-  updateConfigurations = "UPDATE_CONFIGURATIONS"
+  updateConfigurations = "UPDATE_CONFIGURATIONS",
+  setHowManyWarns = "SET_HOW_MANY_WARNS",
+  updateHowManyWarning = "UPDATE_HOW_MANY_WARNING",
+  clearHowManyWarning = "CLEAR_HOW_MANY_WARNING"
 }

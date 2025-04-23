@@ -41,7 +41,7 @@ export default function Warn() {
   }
 
   useEffect(() => {
-    updateThereIsWarn(false)
+    dispatch(Sagas.clearHowManyWarning())
   }, [])
 
   return (

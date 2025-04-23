@@ -29,6 +29,7 @@ const initialState: MainState = {
   newWarning: undefined,
   questions: [],
   warnings: [],
+  howManyWarns: null
 }
 
 export const mainReducer: Reduce = (state = initialState, action) => {
@@ -107,6 +108,10 @@ export const mainReducer: Reduce = (state = initialState, action) => {
     return state
   }
 
+  const SET_HOW_MANY_WARNS: Reduce = (state, action) => {
+    return { ...state, howManyWarns: action.payload.value }
+  }
+
   const actions = {
     SET_DAY,
     SET_FOODS,
@@ -123,6 +128,7 @@ export const mainReducer: Reduce = (state = initialState, action) => {
     SET_NEW_WARNING,
     SET_QUESTIONS,
     SET_WARNINGS,
+    SET_HOW_MANY_WARNS,
   }
 
   let fn_action = actions[action.type as keyof typeof actions]
