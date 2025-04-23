@@ -9,7 +9,7 @@ type _Storage = {
   warnings: WarningType[]
 }
 
-type Select<T=any> = (state: RootState, ...args: any) => T
+type Select<T = any> = (state: RootState, ...args: any) => T
 
 type StorageActionType =
   | "REQUEST_WEEK"
@@ -22,6 +22,7 @@ type StorageActionType =
   | "SET_QUESTIONS"
   | "SET_WARNINGS"
   | "SET_IS_REQUESTING"
+  | "SET_HOW_MANY_WARNS"
 
 // type StorageKeys =
 //   | "@RUral:acceptedNotification"

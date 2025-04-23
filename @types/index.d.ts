@@ -43,6 +43,7 @@ declare type MainState = {
   newWarning: boolean | undefined,
   questions: [],
   warnings: [],
+  howManyWarns: number | null
   // warns: WarningType[] | undefined, // setWarns: Dispatch<SetStateAction<WarningType[] | undefined>>
   // foods: Table[] | undefined, // setFoods: Dispatch<SetStateAction<Table[] | undefined>>
   // week?: Week, // setFoods: Dispatch<SetStateAction<Table[] | undefined>>
@@ -77,4 +78,6 @@ declare type WarningType = {
   title: string,
   content: string,
   endDate: Date | string
+  createdAt: Date | string
+  updatedAt: Date | string
 }

@@ -1,0 +1,172 @@
+{
+  "thisweek": {
+    "_id": "67f9240284267b02930ce2dd",
+    "data": [
+      {
+        "almoco": {
+          "p1": "P1 1",
+          "p2": "P2 1",
+          "gre": "GRE 1",
+          "fag": "FAG 1",
+          "veg": "VEG 1",
+          "gua": "GUA 1",
+          "sal": "SAL 1",
+          "sco": "SCO 1",
+          "sob": "SOB 1",
+          "suc": "SUC 1"
+        },
+        "jantar": {
+          "p1": "P1 2",
+          "p2": "P2 2",
+          "gre": "GRE 2",
+          "veg": "VEG 2",
+          "fag": "FAG 2",
+          "gua": "GUA 2",
+          "sopa": "SOPA 2",
+          "sal": "SAL 2",
+          "sob": "SOB 2",
+          "suc": "SUC 2"
+        }
+      },
+      {
+        "almoco": {
+          "p1": "P1 3",
+          "p2": "P2 3",
+          "gre": "GRE 3",
+          "fag": "FAG 3",
+          "veg": "VEG 3",
+          "gua": "GUA 3",
+          "sal": "SAL 3",
+          "sco": "SCO 3",
+          "sob": "SOB 3",
+          "suc": "SUC 3"
+        },
+        "jantar": {
+          "p1": "P1 4",
+          "p2": "P2 4",
+          "gre": "GRE 4",
+          "veg": "VEG 4",
+          "fag": "FAG 4",
+          "gua": "GUA 4",
+          "sopa": "SOPA 4",
+          "sal": "SAL 4",
+          "sob": "SOB 4",
+          "suc": "SUC 4"
+        }
+      },
+      {
+        "almoco": {
+          "p1": "P1 5",
+          "p2": "P2 5",
+          "gre": "GRE 5",
+          "fag": "FAG 5",
+          "veg": "VEG 5",
+          "gua": "GUA 5",
+          "sal": "SAL 5",
+          "sco": "SCO 5",
+          "sob": "SOB 5",
+          "suc": "SUC 5"
+        },
+        "jantar": {
+          "p1": "P1 6",
+          "p2": "P2 6",
+          "gre": "GRE 6",
+          "veg": "VEG 6",
+          "fag": "FAG 6",
+          "gua": "GUA 6",
+          "sopa": "SOPA 6",
+          "sal": "SAL 6",
+          "sob": "SOB 6",
+          "suc": "SUC 6"
+        }
+      },
+      {
+        "almoco": {
+          "p1": "P1 7",
+          "p2": "P2 7",
+          "gre": "GRE 7",
+          "fag": "FAG 7",
+          "veg": "VEG 7",
+          "gua": "GUA 7",
+          "sal": "SAL 7",
+          "sco": "SCO 7",
+          "sob": "SOB 7",
+          "suc": "SUC 7"
+        },
+        "jantar": {
+          "p1": "P1 8",
+          "p2": "P2 8",
+          "gre": "GRE 8",
+          "veg": "VEG 8",
+          "fag": "FAG 8",
+          "gua": "GUA 8",
+          "sopa": "SOPA 8",
+          "sal": "SAL 8",
+          "sob": "SOB 8",
+          "suc": "SUC 8"
+        }
+      },
+      {
+        "almoco": {
+          "p1": "P1 9",
+          "p2": "P2 9",
+          "gre": "GRE 9",
+          "fag": "FAG 9",
+          "veg": "VEG 9",
+          "gua": "GUA 9",
+          "sal": "SAL 9",
+          "sco": "SCO 9",
+          "sob": "SOB 9",
+          "suc": "SUC 9"
+        },
+        "jantar": {
+          "p1": "P1 10",
+          "p2": "P2 10",
+          "gre": "GRE 10",
+          "veg": "VEG 10",
+          "fag": "FAG 10",
+          "gua": "GUA 10",
+          "sopa": "SOPA 10",
+          "sal": "SAL 10",
+          "sob": "SOB 10",
+          "suc": "SUC 10"
+        }
+      }
+    ],
+    "number_week": 17,
+    "year": 2025,
+    "createdAt": "2025-04-11T14:15:30.088Z",
+    "updatedAt": "2025-04-11T14:15:30.088Z",
+    "__v": 0
+  },
+  "warn": [
+    {
+      "_id": "67f9240284267b02930ce2d2",
+      "title": "Title | 67f9240284267b02930ce2d2",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "endDate": "2025-05-01T10:00:00.000Z",
+      "createdAt": "2025-04-01T09:00:00.000Z"
+    },
+    {
+      "_id": "67f9240284267b02930ce2d3",
+      "title": "Title | 67f9240284267b02930ce2d3",
+      "content": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "endDate": "2025-06-15T15:30:00.000Z",
+      "createdAt": "2025-04-05T10:00:00.000Z"
+    },
+    {
+      "_id": "67f9240284267b02930ce2d4",
+      "title": "Title | 67f9240284267b02930ce2d4",
+      "content": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "endDate": "2025-07-20T08:45:00.000Z",
+      "createdAt": "2025-04-10T11:00:00.000Z"
+    },
+    {
+      "_id": "67f9240284267b02930ce2d5",
+      "title": "Advice | Stay Hydrated",
+      "content": "Remember to drink water regularly throughout the day to stay hydrated and maintain your energy levels.",
+      "endDate": "2025-08-01T12:00:00.000Z",
+      "createdAt": "2025-04-15T12:00:00.000Z"
+    }
+  ]
+}
