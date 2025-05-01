@@ -322,7 +322,7 @@ export default function HomeScreen() {
         getItemLayout={getItemLayout}
         initialScrollIndex={day}
         viewabilityConfig={{
-          itemVisiblePercentThreshold: 100,
+          itemVisiblePercentThreshold: 30,
         }}
         renderItem={({ item }) => (
           <ThemedView style={{ flex: 1, width, height, backgroundColor: theme.colors.card }}>
