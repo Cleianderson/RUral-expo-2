@@ -3,11 +3,10 @@ import { View, Text, useWindowDimensions, TouchableOpacity } from 'react-native'
 import Animated, {
   withSpring,
   useSharedValue,
-  useAnimatedStyle,
-  withDelay,
+  useAnimatedStyle
 } from 'react-native-reanimated'
 
-import ToastContext, { ToastType } from '@/contexts/ToastContext'
+import ToastContext from '@/contexts/ToastContext'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { SFSymbol } from 'expo-symbols'
 
@@ -57,7 +56,7 @@ export default function Toast() {
     } else {
       setTimeout(() => display.value = 'none', 1000)
     }
-  }, [visible])
+  }, [visible, display])
 
   return (
     <Animated.View style={animatedStyle}>

@@ -1,6 +1,6 @@
 import { useTheme } from '@react-navigation/native';
 import { useState } from 'react';
-import { View, ViewProps, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, ViewProps, TouchableOpacity, StyleSheet } from 'react-native';
 import { ThemedText } from './ThemedText';
 
 type Props = ViewProps & { options: string[]; initialValue: string; onSelect: (value: string) => void }
