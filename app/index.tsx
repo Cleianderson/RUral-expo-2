@@ -1,5 +1,5 @@
 import { Redirect } from 'expo-router'
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 
 import { ThemedView } from '@/components/ThemedView'

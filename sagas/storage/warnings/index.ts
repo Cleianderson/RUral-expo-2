@@ -1,5 +1,5 @@
 import Storage from "@react-native-async-storage/async-storage"
-import { call, put, select, takeEvery, takeLatest } from "redux-saga/effects"
+import { call, put, select, takeLatest } from "redux-saga/effects"
 
 import Api from "@/service/Api"
 import { StorageKeys } from "@/constants/StorageKeys"

@@ -20,12 +20,6 @@ export default function Warn() {
   )
   // const [warns, _] = useState<Warn[]>([])
 
-  const updateThereIsWarn = async (value: boolean) => {
-    // dispatch({ type: 'SET_THERE_IS_WARN', payload: { thereIsWarn: value } })
-    dispatch(Sagas.setThereIsWarning(value))
-    // await setItem('@thereIsWarn', { data: value })
-  }
-
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr)
 
@@ -42,7 +36,7 @@ export default function Warn() {
 
   useEffect(() => {
     dispatch(Sagas.clearHowManyWarning())
-  }, [])
+  }, [dispatch])
 
   return (
     <FlatList

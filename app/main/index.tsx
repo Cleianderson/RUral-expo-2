@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, StyleSheet, useWindowDimensions, View, ViewToken } from 'react-native';
+import { FlatList, StyleSheet, useWindowDimensions, View, ViewToken } from 'react-native';
 
 import Button from '@/components/Button';
 import { ThemedText } from '@/components/ThemedText';
@@ -14,8 +14,8 @@ import { Sagas } from '@/constants/Sagas';
 import Svg, { Circle, G, Path, Rect } from 'react-native-svg';
 
 type FlatViewableChanged = (info: {
-  viewableItems: Array<ViewToken>
-  changed: Array<ViewToken>
+  viewableItems: ViewToken[]
+  changed: ViewToken[]
 }) => void
 
 const menuMap = new Map([
@@ -48,11 +48,9 @@ export default function HomeScreen() {
   const week = useSelector<RootState, Week | undefined>((state) => state.mainState.week)
   const day = useSelector<RootState, number | undefined>((state) => state.mainState.day)
   const favorites = useSelector<RootState, string[] | undefined>((state) => state.mainState.favorites)
-  const s = useSelector<RootState, any>(state => state.mainState.isRequesting)
   const { showIndicator, showDateOnIndicator } = useSelector<RootState, Configurations>((state) => state.mainState.configurations)
 
 
-  const setDay = (num: number) => dispatch(Sagas.setDay(num))
   const addFavorites = (item: string) => dispatch(Sagas.addFavorites(item))
   const delFavorites = (item: string) => dispatch(Sagas.deleteFavorites(item))
 
@@ -61,11 +59,11 @@ export default function HomeScreen() {
       if (viewableItems.length > 0) {
         const _day = viewableItems[0].index
         if (typeof _day == "number") {
-          setDay(_day)
+          dispatch(Sagas.setDay(_day))
         }
       }
     },
-    []
+    [dispatch]
   )
 
   const getItemLayout = (data: ArrayLike<Table> | null | undefined, index: number) => (
@@ -138,7 +136,7 @@ export default function HomeScreen() {
         </View>
       )
     })
-  }, [navigation, theme, theme.colors])
+  }, [navigation, theme, dispatch, router])
 
   if (day === undefined || (week?.data === undefined)) {
     return (
@@ -295,8 +293,8 @@ export default function HomeScreen() {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderBottomLeftRadius: day - index == -1 ? 10 : 0,
-                borderBottomRightRadius: day - index == 1 ? 10 : 0,
+                borderBottomLeftRadius: day - index === -1 ? 10 : 0,
+                borderBottomRightRadius: day - index === 1 ? 10 : 0,
                 borderTopEndRadius: day - index === 0 ? 10 : 0,
                 borderTopStartRadius: day - index === 0 ? 10 : 0,
                 backgroundColor: day - index === 0 ? theme.colors.card : theme.colors.unselect

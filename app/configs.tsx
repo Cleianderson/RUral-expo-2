@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import Picker from '@/components/Picker'
 import Info from '@/components/Info'
 import Social, { IconName } from '@/components/Social'
-import { IconSymbolName } from '@/components/ui/IconSymbol'
 // import Config from '~/contexts/ConfigContext'
 
 type ConfigData = {

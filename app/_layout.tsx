@@ -50,7 +50,7 @@ function ThemeContainer() {
     dispatch(Sagas.getWeek())
     dispatch(Sagas.getWarnings())
     dispatch(Sagas.getConfigurations())
-  }, [])
+  }, [dispatch])
   return (
     <ThemeProvider value={colorScheme === 'dark' ? Themes.dark : Themes.light}>
       <StatusBar {...statusBarProps} />
